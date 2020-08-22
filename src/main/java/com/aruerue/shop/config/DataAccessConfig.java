@@ -15,7 +15,7 @@ import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 public class DataAccessConfig {
 	@Bean
 	public SqlSessionFactory sqlSessionFactory(DataSource dataSource) throws Exception{
-		System.out.println("여기왔니");
+		System.out.println("DataAccessConfig : 여기왔니");
 		SqlSessionFactoryBean sessionFactory = new SqlSessionFactoryBean();
 		sessionFactory.setDataSource(dataSource);
 		sessionFactory.setMapperLocations(
@@ -25,7 +25,7 @@ public class DataAccessConfig {
 
 	@Bean
 	public SqlSessionTemplate sqlSessionTemplate(SqlSessionFactory sqlSessionFactory) {
-		System.out.println("여긴왔니?");
+		System.out.println("DataAccessConfig : 여긴왔니?");
 		return new SqlSessionTemplate(sqlSessionFactory);
 	}
 
