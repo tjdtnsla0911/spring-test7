@@ -17,6 +17,7 @@ import com.aruerue.shop.config.ouath.provider.OAuthUserInfo;
 import com.aruerue.shop.controller.dto.ProductDto;
 import com.aruerue.shop.model.user.User;
 import com.aruerue.shop.repository.UserRepository;
+import com.aruerue.shop.service.UserService;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 
@@ -27,6 +28,7 @@ import lombok.RequiredArgsConstructor;
 public class JwtCreateController {
 
 	private final UserRepository userRepository;
+	private final UserService userService;
 	private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
 
@@ -42,7 +44,7 @@ public class JwtCreateController {
 
 
 
-
+//일반유저 로그인
 	@PostMapping("/oauth/jwt/common")
 	public String commonlogin(@RequestBody Map<String, Object> data) {
 		System.out.println("controller.JwtCreateController.java의 jwtCreate에 왔습니다 ");
@@ -98,41 +100,57 @@ public class JwtCreateController {
 
 		return jwtToken;
 	}
+	
+	
+	
+	
+	
+	
+	//구글 로그인
 	@PostMapping("/oauth/jwt/google")
 	public String jwtCreate(@RequestBody Map<String, Object> data) {
 		System.out.println("controller.JwtCreateController.java의 jwtCreate에 왔습니다 ");
 		System.out.println("여긴 데이터 data = "+data);
-		System.out.println(data.get("profileObj"));//구글에서 주는양식 .
-		OAuthUserInfo googleUser =
-				new GoogleUser((Map<String, Object>)data.get("profileObj"));
-		System.out.println("------------------------------------------------------------");
-		System.out.println("googleUser.getProvider() = "+googleUser.getProvider());
-		System.out.println("googleUser.getProvider() = "+googleUser.getProviderId());
-		User userEntity =
-				userRepository.findByUsername(googleUser.getProvider()+"_"+googleUser.getProviderId());
-		System.out.println("controller.JwtCreateController.java의 jwtCreate의 userEntity = "+userEntity);
-		if(userEntity == null) {
-			System.out.println("controller.JwtCreateController.java의 jwtCreate의 if(userEntity == null)에 왔습니다 ");
-			User userRequest = User.builder()
-					.username(googleUser.getProvider()+"_"+googleUser.getProviderId())
-					.password(bCryptPasswordEncoder.encode("겟인데어"))
-					.email(googleUser.getEmail())
-					.provider(googleUser.getProvider())
-					.providerId(googleUser.getProviderId())
-					.role("ROLE_USER")
-					.build();
-			userEntity = userRepository.saveGoogle(userRequest);
-			System.out.println("controller.JwtCreateController.java의 jwtCreate의 if(userEntity == null)의 userEntity = "+userEntity);
-		}
-
-		String jwtToken = JWT.create()
-				.withSubject(userEntity.getUsername())
-				.withExpiresAt(new Date(System.currentTimeMillis()+JwtProperties.EXPIRATION_TIME))
-				.withClaim("id", userEntity.getId())
-				.withClaim("username", userEntity.getUsername())
-				.sign(Algorithm.HMAC512(JwtProperties.SECRET));
-		System.out.println("의controller.JwtCreateController.java의 jwtCreate의jwtTkoen입니다 ="+jwtToken);
+		System.out.println(data.get("profileObj"));//구글에서 주는양식 .		
+		
+		String jwtToken = userService.유저찾기(data);  
+		
 		return jwtToken;
+		////////////////
+		
+		
+		
+		/*
+		 * OAuthUserInfo googleUser = new GoogleUser((Map<String,
+		 * Object>)data.get("profileObj")); System.out.println(
+		 * "------------------------------------------------------------");
+		 * System.out.println("googleUser.getProvider() = "+googleUser.getProvider());
+		 * System.out.println("googleUser.getProvider() = "+googleUser.getProviderId());
+		 * User userEntity =
+		 * userRepository.findByUsername(googleUser.getProvider()+"_"+googleUser.
+		 * getProviderId()); System.out.
+		 * println("controller.JwtCreateController.java의 jwtCreate의 userEntity = "
+		 * +userEntity); if(userEntity == null) { System.out.
+		 * println("controller.JwtCreateController.java의 jwtCreate의 if(userEntity == null)에 왔습니다 "
+		 * ); User userRequest = User.builder()
+		 * .username(googleUser.getProvider()+"_"+googleUser.getProviderId())
+		 * .password(bCryptPasswordEncoder.encode("겟인데어")) .email(googleUser.getEmail())
+		 * .provider(googleUser.getProvider()) .providerId(googleUser.getProviderId())
+		 * .role("ROLE_USER") .build(); userEntity =
+		 * userRepository.saveGoogle(userRequest); System.out.
+		 * println("controller.JwtCreateController.java의 jwtCreate의 if(userEntity == null)의 userEntity = "
+		 * +userEntity); }
+		 * 
+		 * String jwtToken = JWT.create() .withSubject(userEntity.getUsername())
+		 * .withExpiresAt(new
+		 * Date(System.currentTimeMillis()+JwtProperties.EXPIRATION_TIME))
+		 * .withClaim("id", userEntity.getId()) .withClaim("username",
+		 * userEntity.getUsername()) .sign(Algorithm.HMAC512(JwtProperties.SECRET));
+		 * System.out.
+		 * println("의controller.JwtCreateController.java의 jwtCreate의jwtTkoen입니다 ="
+		 * +jwtToken); return jwtToken;
+		 */
+		////////////////////////////
 	}
 
 
