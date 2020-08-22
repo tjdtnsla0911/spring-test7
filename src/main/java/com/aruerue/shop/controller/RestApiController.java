@@ -63,6 +63,7 @@ public class RestApiController {
 		return userRepository.findAll();
 	}
 
+	//일반 회원가입
 	@PostMapping("join")
 	public String join(@RequestBody User user) {
 		System.out.println("join에왔습니다 ");
