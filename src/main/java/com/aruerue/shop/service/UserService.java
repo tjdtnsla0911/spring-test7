@@ -21,29 +21,29 @@ public class UserService {
 
 	@Autowired
 	private UserRepository userRepository;
-	
+
 	@Autowired
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
-	
+
 	@Transactional
-	public User 회원가입(User user) {	
+	public User 회원가입(User user) {
 			user.setRole("ROLE_USER");
-			userRepository.save(user);					
+			userRepository.save(user);
 			return userRepository.findByUsername(user.getUsername());
 	}
-	
+
 	//일반 로그인?
 	@Transactional(readOnly = true) //데이터 변경을 허용하지 않음 (혹시 이 트랜젝션이 끝나기 전에
 	//다른 사용자가 데이터를 변경한 내용 때문에 엉키지않게 하려고)=> 정합성을 위해서
 		public User 일반로그인(User user) {
 		System.out.println(user);
-		
-			return userRepository.findByUsername(user.getUsername());	
+
+			return userRepository.findByUsername(user.getUsername());
 	}
-	
-	
+
+
 	//oauth로 login할 때
-	@Transactional(readOnly = true) 
+	@Transactional
 	public String 유저찾기(Map<String, Object> data) {
 		System.out.println("유저찾기");
 		///////////
@@ -52,11 +52,12 @@ public class UserService {
 		System.out.println("------------------------------------------------------------");
 		System.out.println("googleUser.getProvider() = "+googleUser.getProvider());
 		System.out.println("googleUser.getProvider() = "+googleUser.getProviderId());
+		System.out.println("kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk");
 		User userEntity =
 				userRepository.findByUsername(googleUser.getProvider()+"_"+googleUser.getProviderId());
-		System.out.println("controller.JwtCreateController.java의 jwtCreate의 userEntity = "+userEntity);
+		System.out.println("Service.UserService.의 jwtCreate의 userEntity = "+userEntity);
 		if(userEntity == null) {
-			System.out.println("controller.JwtCreateController.java의 jwtCreate의 if(userEntity == null)에 왔습니다 ");
+			System.out.println("Service.UserService.의 jwtCreate의 if(userEntity == null)에 왔습니다 ");
 			User userRequest = User.builder()
 					.username(googleUser.getProvider()+"_"+googleUser.getProviderId())
 					.password(bCryptPasswordEncoder.encode("겟인데어"))
@@ -65,8 +66,10 @@ public class UserService {
 					.providerId(googleUser.getProviderId())
 					.role("ROLE_USER")
 					.build();
+			System.out.println("mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm");
+			System.out.println(userEntity);
 			userEntity = userRepository.saveGoogle(userRequest);
-			System.out.println("controller.JwtCreateController.java의 jwtCreate의 if(userEntity == null)의 userEntity = "+userEntity);
+			System.out.println("Service.UserService.java의 jwtCreate의 if(userEntity == null)의 userEntity = "+userEntity);
 		}
 
 		String jwtToken = JWT.create()
@@ -75,15 +78,15 @@ public class UserService {
 				.withClaim("id", userEntity.getId())
 				.withClaim("username", userEntity.getUsername())
 				.sign(Algorithm.HMAC512(JwtProperties.SECRET));
-		System.out.println("의controller.JwtCreateController.java의 jwtCreate의jwtTkoen입니다 ="+jwtToken);
+		System.out.println("Service.UserService..java의 jwtCreate의jwtTkoen입니다 ="+jwtToken);
 		return jwtToken;
-		//////////////	
-		
-		
+		//////////////
+
+
 			//return userRepository.findByUsername(useranme);
 	}
-		
 
-	
-	
+
+
+
 }
