@@ -2,6 +2,8 @@ package com.aruerue.shop.repository;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Mapper;
+
 import com.aruerue.shop.controller.dto.ProductDto;
 import com.aruerue.shop.model.user.User;
 
@@ -14,5 +16,5 @@ public interface UserRepository{
 	void deleteUser(int id);
 	void updateUser(User user);
 	User fetchUserByID(int id);
-	
+
 }

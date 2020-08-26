@@ -100,26 +100,27 @@ public class JwtCreateController {
 
 		return jwtToken;
 	}
-	
-	
-	
-	
-	
-	
+
+
+
+
+
+
 	//구글 로그인
 	@PostMapping("/oauth/jwt/google")
 	public String jwtCreate(@RequestBody Map<String, Object> data) {
+		System.out.println("-----------------");
 		System.out.println("controller.JwtCreateController.java의 jwtCreate에 왔습니다 ");
 		System.out.println("여긴 데이터 data = "+data);
-		System.out.println(data.get("profileObj"));//구글에서 주는양식 .		
-		
-		String jwtToken = userService.유저찾기(data);  
-		
+		System.out.println(data.get("profileObj"));//구글에서 주는양식 .
+
+		String jwtToken = userService.유저찾기(data);
+
 		return jwtToken;
 		////////////////
-		
-		
-		
+
+
+
 		/*
 		 * OAuthUserInfo googleUser = new GoogleUser((Map<String,
 		 * Object>)data.get("profileObj")); System.out.println(
@@ -140,7 +141,7 @@ public class JwtCreateController {
 		 * userRepository.saveGoogle(userRequest); System.out.
 		 * println("controller.JwtCreateController.java의 jwtCreate의 if(userEntity == null)의 userEntity = "
 		 * +userEntity); }
-		 * 
+		 *
 		 * String jwtToken = JWT.create() .withSubject(userEntity.getUsername())
 		 * .withExpiresAt(new
 		 * Date(System.currentTimeMillis()+JwtProperties.EXPIRATION_TIME))
