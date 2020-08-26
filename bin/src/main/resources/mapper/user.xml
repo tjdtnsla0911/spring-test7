@@ -17,12 +17,12 @@
 		INSERT INTO user(email,password,provider,providerId,role,username)
 		VALUES(#{email},#{password},#{provider},#{providerId},#{role},#{username})
 	</insert>
-	
+
 	   <insert id="saveGoogle">
   INSERT INTO user(email,password,provider,providerId,role,username)
   VALUES(#{email},#{password},#{provider},#{providerId},#{role},#{username})
 </insert>
-	
+
 
 	<select id="login" resultType="com.aruerue.shop.model.user.User">
 		SELECT id, username, email, name, gender, phone, address, detail_address,
@@ -63,4 +63,3 @@
 		ORDER BY id
 	</select>
 </mapper>
-  
