@@ -52,18 +52,13 @@ CREATE TABLE product (
     price int, #원가
     disc varchar(100), #설명
     ad boolean not null, #광고 #메인에 걸꺼냐 안걸꺼냐
-    discounted  int, #할인
+    discounted int, #할인
     content longtext, #내용
     categoryId int, #1이면 개별상품 2면 세트상품
-    bgImg varchar(1500) not null #메인 큰 사진 경로
-) engine=InnoDB default charset=utf8;
-
-CREATE TABLE product_status  (
-	id int auto_increment primary key,
+    bgImg varchar(1500) not null, #메인 큰 사진 경로
     sale boolean, #여긴 일단 null안해놧음 sale 없을수도있으니까
     newly  boolean, #신상
-    best  boolean, #잘팔림
-    productId int
+    best  boolean #잘팔림
 ) engine=InnoDB default charset=utf8;
 
 
@@ -208,21 +203,13 @@ insert into user(username,password,email,name,gender,phone,address,detail_addres
 values('dnjswo','dnjswo1234','dnjswop321@nate.com','이원재','남','010-2322-7440','부산광역시 연산','연산역 집','1992-01-01',2000,'ROLE_USER',false,'프로필입니다.','직접가입함','직접가입함',now());
 
 #product 더미데이터
-insert into product(title,thumb,price,disc,ad,discounted,content,categoryId,bgImg)
-values ('프레시 런드리 디터전트','thumb의 경로1',28000,'베이비 런드리 디터전트(무향)1L*1ea',true,27000,'content1',1,'bgImg의 경로1');
-insert into product(title,thumb,price,disc,ad,discounted,content,categoryId,bgImg)
-values ('패밀리 키친 세트','thumb의 경로2',40000,'프레시 디시 앤 프루트 워시 (오렌지) 500ml * 1ea 베이비 보틀 앤 토이 워시 (무향) 500ml * 1ea',true,34000,'content2',2,'bgImg의 경로2');
-insert into product(title,thumb,price,disc,ad,discounted,content,categoryId,bgImg)
-values ('기프트 세트','thumb의 경로3',63000,'OPTION. 구성품 택1 (키친 세트,리빙케어 세트, 런드미 세트중) OPTION 2. 박스 색상 택1 (프레시 네이버,베이비 민트 중)',false,39000,'content3',2,'bgImg의 경로3');
+insert into product(title,thumb,price,disc,ad,discounted,content,categoryId,bgImg, sale, newly, best)
+values ('프레시 런드리 디터전트','thumb의 경로1',28000,'베이비 런드리 디터전트(무향)1L*1ea',true,27000,'content1',1,'bgImg의 경로1', true, false, false);
+insert into product(title,thumb,price,disc,ad,discounted,content,categoryId,bgImg, sale, newly, best)
+values ('패밀리 키친 세트','thumb의 경로2',40000,'프레시 디시 앤 프루트 워시 (오렌지) 500ml * 1ea 베이비 보틀 앤 토이 워시 (무향) 500ml * 1ea',true,null,'content2',2,'bgImg의 경로2', false, true, false);
+insert into product(title,thumb,price,disc,ad,discounted,content,categoryId,bgImg, sale, newly, best)
+values ('기프트 세트','thumb의 경로3',63000,'OPTION. 구성품 택1 (키친 세트,리빙케어 세트, 런드미 세트중) OPTION 2. 박스 색상 택1 (프레시 네이버,베이비 민트 중)',false,39000,'content3',2,'bgImg의 경로3', true, false, false);
 
-#product_status 더미데이터
-insert into product_status(id,sale,newly, best,productId)
-values(1,false,true,false,1);
-insert into product_status(id,sale,newly, best,productId)
-values(2,true,true,true,2);
-insert into product_status(id,sale,newly, best,productId)
-values(3,true,false,false,3);
-select * from product_status;
 
 #review 더미데이터
 insert into review(productId,content,userId,createDate,star,img,existenceOfImg,orderId)

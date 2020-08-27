@@ -22,6 +22,4 @@ public class MypageOrdersResponseDto {
 	private String title;
 	private int userId;
 	
-
-
 }
