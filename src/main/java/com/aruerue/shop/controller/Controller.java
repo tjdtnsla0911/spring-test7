@@ -11,7 +11,6 @@ import com.aruerue.shop.repository.TestRepository;
 
 @RestController
 public class Controller {
-	
 
 
 	@GetMapping({" ","/"})

@@ -1,4 +1,4 @@
-package com.aruerue.shop.controller.mypage;
+package com.aruerue.shop.controller;
 
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;

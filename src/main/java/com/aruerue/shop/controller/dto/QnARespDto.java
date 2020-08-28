@@ -2,8 +2,18 @@ package com.aruerue.shop.controller.dto;
 
 import java.sql.Timestamp;
 
-//q.id, q.title, u.username, q.createDate
+import com.aruerue.shop.controller.dto.CommonRespDto.CommonRespDtoBuilder;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+//q.id, q.title, u.username, q.createDate
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class QnARespDto {
 private int id;
 private String title;
