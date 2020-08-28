@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class Ordres {
+public class Orders {
 private int id;
 private int userId;
 private Timestamp orderDate;

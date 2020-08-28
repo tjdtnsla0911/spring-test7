@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.aruerue.shop.repository.TestRepository">
+
+<select id="getProduct"  resultType="com.aruerue.shop.model.product.Product">
+SELECT * FROM product WHERE id = #{id}
+</select>
+
+<select id="getReview"  resultType="com.aruerue.shop.model.review.Review">
+SELECT * FROM review WHERE id = #{id}
+</select>
+
+<select id="getU"  resultType="com.aruerue.shop.model.user.User">
+SELECT * FROM user WHERE id =#{id}
+</select>
+
+<select id="getR"  resultType="com.aruerue.shop.model.review.Recomment">
+SELECT * FROM recomment WHERE id = #{id}
+</select>
+
+<select id="getN"  resultType="com.aruerue.shop.model.Notice">
+SELECT * FROM notice WHERE id = #{id}
+</select>
+
+<select id="getQ"  resultType="com.aruerue.shop.model.Qna">
+SELECT * FROM qna WHERE id = #{id}
+</select>
+
+<select id="getO"  resultType="com.aruerue.shop.model.user.Orders">
+SELECT * FROM orders WHERE id = #{id}
+</select>
+
+<select id="getOd"  resultType="com.aruerue.shop.model.user.OrdersDetail">
+SELECT * FROM orders_detail WHERE id = #{id}
+</select>
+
+<select id="getW"  resultType="com.aruerue.shop.model.user.WishList">
+SELECT * FROM wishlist WHERE id = #{id}
+</select>
+
+<select id="getCoupon"  resultType="com.aruerue.shop.model.user.Coupon">
+SELECT * FROM coupon WHERE id = #{id}
+</select>
+
+<select id="getPoint"  resultType="com.aruerue.shop.model.user.Point">
+SELECT * FROM point WHERE id = #{id}
+</select>
+
+<select id="getRp"  resultType="com.aruerue.shop.model.product.RelatedProduct">
+SELECT * FROM related_product WHERE id = #{id}
+</select>
+
+<select id="getCategory"  resultType="com.aruerue.shop.model.product.Category">
+SELECT * FROM category WHERE id = #{id}
+</select>
+
+<select id="getCart"  resultType="com.aruerue.shop.model.user.Cart">
+SELECT * FROM cart WHERE id = #{id}
+</select>
+
+</mapper>

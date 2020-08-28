@@ -1,17 +1,24 @@
 package com.aruerue.shop.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.aruerue.shop.model.product.Product;
+import com.aruerue.shop.repository.TestRepository;
+
 @RestController
 public class Controller {
 	
+
+
 	@GetMapping({" ","/"})
 	public String home() {
 		return "메인화면입니다.";
 	}
+	
 	
 	@GetMapping("/shop")
 	public String shop() {
@@ -21,7 +28,7 @@ public class Controller {
 	@GetMapping("/shop_view/{id}")
 	public String shop_view(@PathVariable int id) {
 		
-		return "상품 디테일 페이지 입니다.";
+		return id +"상품 디테일 페이지 입니다.";
 	}
 	
 	@GetMapping("/review")
@@ -41,7 +48,7 @@ public class Controller {
 	
 	@PostMapping("/shop_cart/{userId}")
 	public String cart(@PathVariable int userId) {
-		return "장바구니 화면입니다." ;
+		return userId + "장바구니 화면입니다." ;
 	}	
 	
 

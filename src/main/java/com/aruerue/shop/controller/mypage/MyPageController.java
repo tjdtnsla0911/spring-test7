@@ -10,7 +10,7 @@ public class MyPageController {
 	@PostMapping("/shop_mypage/{userId}/order")
 	public String mypageOrder(@PathVariable int userId) {
 		
-		return "마이페이지 주문조회 화면 입니다.";
+		return userId+"마이페이지 주문조회 화면 입니다.";
 	}
 	
 	@PostMapping("/shop_mypage/{userId}/wish_list")

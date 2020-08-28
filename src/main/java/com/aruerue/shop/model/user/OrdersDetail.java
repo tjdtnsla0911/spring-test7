@@ -1,4 +1,4 @@
-package com.aruerue.shop.model.product;
+package com.aruerue.shop.model.user;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -6,13 +6,15 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
-public class Product_status {
+public class OrdersDetail {
 private int id;
-private boolean sale;
-private boolean newly;
-private boolean best;
+private int orderId;
 private int productId;
+private int quantity;
+private int price;
+private String stats;
+private int fee;
 }

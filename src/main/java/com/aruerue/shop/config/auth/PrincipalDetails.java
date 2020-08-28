@@ -64,11 +64,11 @@ public class PrincipalDetails implements UserDetails{
       	System.out.println("auth.PrincipalDetails의 getAuthorities에 왔습니다");
 
 		Collection<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
-        user.getRoleList().forEach(r -> {
-          	System.out.println("auth.PrincipalDetails의 getAuthorities의 authorities= "+authorities);
-
-        	authorities.add(()->{ return r;});
-        });
+//        user.getRoleList().forEach(r -> {
+//          	System.out.println("auth.PrincipalDetails의 getAuthorities의 authorities= "+authorities);
+//
+//        	authorities.add(()->{ return r;});
+//        });
      	System.out.println("auth.PrincipalDetails의 getAuthorities의 authorities의 완결판= "+authorities);
         return authorities;
     }

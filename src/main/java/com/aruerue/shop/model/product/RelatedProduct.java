@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Related_product {
+public class RelatedProduct {
 private int id;
 private int parentProductId;
 private int relatedProductId;

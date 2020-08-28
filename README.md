@@ -65,7 +65,8 @@ CREATE TABLE product (
 CREATE TABLE review   (
 	id int auto_increment primary key,
     productId  int,
-    content   varchar(500),
+    title   varchar(500),
+    content   varchar(1000),
     userId  int,
     createDate timestamp,
     star int, #난 예전에 별개수를 int로 바꿔서 넣어서 일단 int로 했음
@@ -78,7 +79,7 @@ CREATE TABLE review   (
 CREATE TABLE user   (
 	id int auto_increment primary key,
     username varchar(300),
-    password  varchar(1500),
+    password  varchar(500),
     email  varchar(1500),
     name   varchar(200),
     gender  varchar(100), #boolean 인가? 헷갈리는데 varchar함

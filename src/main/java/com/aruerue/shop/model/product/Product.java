@@ -20,5 +20,8 @@ private int discounted;
 private String content;
 private int categoryId;
 private String bgImg;
+private boolean sale;
+private boolean newly;
+private boolean best;
 
 }

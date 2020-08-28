@@ -1,6 +1,15 @@
 package com.aruerue.shop.controller.dto.detail;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 //select id, thumb, title, price, discounted, sale, newly, best, disc, content
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 public class DetailProductRespDto {
 	private int id;
 	private String thumb;
