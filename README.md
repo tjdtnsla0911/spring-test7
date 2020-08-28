@@ -217,7 +217,7 @@ values(1,'너무비싸서 놀랫네요..',1,now(),5,'img의 경로1',true,1);
 insert into review(productId,content,userId,createDate,star,img,existenceOfImg,orderId)
 values(2,'아르아르 믿을수가없다',2,now(),1,'img의 경로2',true,1);
 insert into review(productId,content,userId,createDate,star,img,existenceOfImg,orderId)
-values(1,'너무비싸서 놀랫네요..',1,now(),3,'img의 경로1',true,1);
+values(1,'너무비싸서 놀랫네요..',3,now(),3,'img의 경로1',true,1);
 
 #recomment 더미데이터
 insert into recomment(reviewId,comment,createDate)
@@ -249,33 +249,41 @@ values ('품질에 이상이있어요..','비누에서 거품이나요..',now(),
 #orders 더미데이터
 insert into orders(userId,orderDate,totalPrice,howToPay)
 values(1,now(),68000,'카카오페이');
+insert into orders(userId,orderDate,totalPrice,howToPay)
+values(2,now(),50000,'무통장입금');
 
 #orders_detail 더미데이터
 insert into orders_detail(orderId,productId,quantity,price,stats,fee)
 values (1,1,1,28000,'배송중',3000);
 insert into orders_detail(orderId,productId,quantity,price,stats,fee)
 values (1,1,2,40000,'배송중',3000);
+insert into orders_detail(orderId,productId,quantity,price,stats,fee)
+values (2,2,1,10000,'교환',3000);
+insert into orders_detail(orderId,productId,quantity,price,stats,fee)
+values (2,1,2,40000,'배송중',3000);
 
 #wishlist 더미데이터
 insert into wishlist(userid,productId)values(1,1);
 insert into wishlist(userid,productId)values(1,2);
 insert into wishlist(userid,productId)values(1,3);
+insert into wishlist(userid,productId)values(2,2);
+insert into wishlist(userid,productId)values(3,3);
 
 #coupon 더미데이터
 insert into coupon(userId,code,validityStart,validityEnd,availability)
-values(1,'1212-2222-3333-4444',now(),DATE_ADD(now(), INTERVAL 1 MONTH),true);
+values(1,'11111-2222-3333-4444',now(),DATE_ADD(now(), INTERVAL 1 MONTH),true);
 insert into coupon(userId,code,validityStart,validityEnd,availability)
-values(2,'1212-2222-3333-4444',now(),DATE_ADD(now(), INTERVAL 1 MONTH),true);
+values(2,'2222-2222-3333-4444',now(),DATE_ADD(now(), INTERVAL 1 MONTH),true);
 insert into coupon(userId,code,validityStart,validityEnd,availability)
-values(3,'1212-2222-3333-4444',now(),DATE_ADD(now(), INTERVAL 1 MONTH),true);
+values(3,'3333-2222-3333-4444',now(),DATE_ADD(now(), INTERVAL 1 MONTH),true);
 
 #point 더미데이터
 insert into point(userId,historyDate,reason,point,totalPoint)
-values(1,now(),'썻으니까',2000,50000);
+values(1,now(),'이벤트',2000,50000);
 insert into point(userId,historyDate,reason,point,totalPoint)
-values(2,now(),'사용했으니까',1500,20000);
+values(2,now(),'OO행사',1500,20000);
 insert into point(userId,historyDate,reason,point,totalPoint)
-values(3,now(),'출금했으니까',1000,5200);
+values(3,now(),'출금했으니까',-1000,5200);
 
 #related_product 더미데이터
 insert into related_product(parentProductId,relatedProductId)
@@ -283,15 +291,16 @@ values (1,3);
 insert into related_product(parentProductId,relatedProductId)
 values (2,1);
 insert into related_product(parentProductId,relatedProductId)
-values (3,3);
+values (3,1);
 insert into related_product(parentProductId,relatedProductId)
 values (1,2);
 
 #category 더미데이터
+#parentTypeId는 아직은 필요없지만 카테고리 확장성을 대비하여 만듬.
 insert into category(type,parentTypeId)
 values ("싱글상품",1);
 insert into category(type,parentTypeId)
-values ("세트상품",2);
+values ("세트상품",1);
 
 #cart 더미데이터
 insert into cart(productId,userId,quantity,price)

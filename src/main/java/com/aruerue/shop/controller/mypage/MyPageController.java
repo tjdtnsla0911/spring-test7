@@ -22,7 +22,7 @@ public class MyPageController {
 	@PostMapping("/shop_mypage/{userId}/cancle")
 	public String mypageCart(@PathVariable int userId) {
 		
-		return "마이페이지 장바구니 화면 입니다.";
+		return "마이페이지  취소/교환/반품 화면 입니다.";
 	}
 	
 	@PostMapping("/shop_mypage/{userId}/coupon")
