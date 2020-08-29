@@ -5,37 +5,113 @@
 <mapper namespace="com.aruerue.shop.repository.Repository">
 
 <select id="findHomeAd" resultType="com.aruerue.shop.controller.dto.home.HomeAdResoDto">
-SELECT id, bgimg
-FROM product
-where ad=true;
+	SELECT id, bgimg
+	FROM product
+	WHERE ad=true;
 </select>
 
 
 <select id="findNotice" resultType="com.aruerue.shop.controller.dto.home.HomeNoticeRespDto">
-SELECT id, thumb
-FROM notice;
+	SELECT id, thumb
+	FROM notice;
 </select>
 
-<select id="findProducts" resultType="com.aruerue.shop.controller.dto.home.HomeProductRespDto">
-select id, thumb, title, price, discounted, sale, newly, best
-from product;
+<select id="findProductsForHome" resultType="com.aruerue.shop.controller.dto.home.HomeProductRespDto">
+	SELECT id, thumb, title, price, discounted, sale, newly, best
+	FROM product;
 </select>
 
-<select id="findReviews" resultType="com.aruerue.shop.controller.dto.home.HomeReviewRespDto">
-select r.content, p.title, p.id, u.username
-from review r left outer join user u
-on r.userId = u.id
-left outer join product p
-on r.productId = p.id;
+<select id="findReviewsForHome" resultType="com.aruerue.shop.controller.dto.home.HomeReviewRespDto">
+	SELECT r.content, p.title, p.id, u.username
+	FROM review r LEFT OUTER JOIN user u
+	ON r.userId = u.id
+	LEFT OUTER JOIN product p
+	ON r.productId = p.id;
 </select>
 
-<select id="findProductsByC" resultType="com.aruerue.shop.controller.dto.ShopRespDto">
-SELECT c.type, p.categoryId, p.thumb, p.title, p.price, p.discounted, p.sale, p.newly, p.best
-FROM product p LEFT OUTER JOIN category c
-ON p.categoryId = c.id;
+<select id="findProductsForShop" resultType="com.aruerue.shop.controller.dto.ShopRespDto">
+	SELECT c.type, p.categoryId, p.thumb, p.title, p.price, p.discounted, p.sale, p.newly, p.best
+	FROM product p LEFT OUTER JOIN category c
+	ON p.categoryId = c.id;
+</select>
+
+<select id="findProductById" resultType="com.aruerue.shop.controller.dto.detail.DetailProductRespDto">
+	SELECT id, thumb, title, price, discounted, sale, newly, best, disc, content
+	FROM product
+	WHERE id = #{id};
+</select>
+
+<select id="findReviewsById" resultType="com.aruerue.shop.controller.dto.detail.DetailReviewRespDto">
+	SELECT r.userId, r.productId, r.content, r.star, r.createDate, r.orderId, r.img,
+	(SELECT u.username from user u where u.id = r.userId) as username,
+	(SELECT o.howtopay from orders o where o.id = r.orderId) as howToPay
+	FROM product p LEFT OUTER JOIN review r
+	ON p.id = r.productId
+	WHERE p.id = #{id};
 </select>
 
 
+<select id="findQnAById" resultType="com.aruerue.shop.controller.dto.detail.DetailQnARespDto">
+	SELECT q.answer, q.title, u.username, q.createDate, p.id
+	FROM qna q LEFT OUTER JOIN user u
+	ON q.userId = u.id
+	LEFT OUTER JOIN product p
+	ON q.productId = p.id
+	WHERE q.productId = #{id};
+</select>
+
+
+<select id="findRelatedProductsById" resultType="com.aruerue.shop.controller.dto.detail.DetailRelatedRespDto">
+	SELECT id, thumb, title, price, discounted, sale, newly, best  
+	FROM product
+	WHERE id IN (SELECT relatedProductId FROM related_product WHERE parentProductId= #{id});
+</select>
+
+
+<select id="findReviews" resultType="com.aruerue.shop.controller.dto.review.ReviewRespDto">
+	SELECT r.id, p.title, r.content, u.username, r.createDate, r.star
+	FROM review r LEFT OUTER JOIN product p
+	ON r.productId  = p.id
+	LEFT OUTER JOIN user u
+	ON r.userId = u.id;
+</select>
+
+<select id="findReviewById" resultType="com.aruerue.shop.controller.dto.review.ReviewDetailRespDto">
+	SELECT r.img , u.profile, r.star, u.username, r.createDate, o.howToPay, r.content, p.thumb, p.title, rc.createDate, rc.comment
+	FROM review r LEFT OUTER JOIN user u
+	ON r.userId = u.id
+	LEFT OUTER JOIN orders o
+	ON r.orderId = o.id
+	LEFT OUTER JOIN product p
+	ON r.productId = p.id
+	LEFT OUTER JOIN recomment rc
+	ON r.id = rc.reviewId
+	WHERE r.id= #{id};
+</select>
+
+<select id="findNotices" resultType="com.aruerue.shop.controller.dto.notice.NoticeRespDto">
+	SELECT id, title, createDate, readCount
+	FROM notice;
+</select>
+
+<select id="findNoticeById" resultType="com.aruerue.shop.controller.dto.notice.NoticeDetailsRespDto">
+	SELECT id, title, createDate, readCount, content
+	FROM notice
+	WHERE id = #{id};
+</select>
+
+<select id="findQnAs" resultType="com.aruerue.shop.controller.dto.QnARespDto">
+	SELECT q.id, q.title, u.username, q.createDate
+	FROM qna q LEFT OUTER JOIN user u
+	ON q.userId = u.id;
+</select>
+
+<select id="findCartsById" resultType="com.aruerue.shop.controller.dto.CartRespDto">
+	SELECT p.id, p.title, c.quantity, p.price
+	FROM cart c INNER JOIN product p INNER JOIN user u
+	ON c.userId = u.id AND p.id = c.productId
+	WHERE u.id = #{id};
+</select>
 
 
 

@@ -20,7 +20,7 @@ Link: [아임포트결제하기2]][https://docs.iamport.kr/implementation/paymen
 # DB
 
 ```sql
-create user 'areuareu'@'%' identified by 'bitc5600';
+create user 'cos'@'%' identified by 'cos1234';
 GRANT ALL PRIVILEGES ON *.* TO 'areuareu'@'%';
 create database areuareu;
 use areuareu;

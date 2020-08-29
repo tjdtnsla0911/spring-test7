@@ -18,7 +18,6 @@ public interface MyPageRepository {
 	List<MypagePointRespDto> findPointById(int id);
 	List<MypageQnaRespDto> findQnaById(int id);
 	MypageUpdateRespDto findUserById(int id);
-	void deleteByid(int id);
-	
+	void deleteByid(int id);	
 
 }

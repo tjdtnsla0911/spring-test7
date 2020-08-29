@@ -10,8 +10,8 @@ spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/areuareu?serverTimezone=Asia/Seoul
-    username: cos
-    password: cos1234
+    username: areuareu
+    password: bitc5600
     
 file:
   path: C:/src/jwtreact/aruerue-back/src/main/resources/upload/
