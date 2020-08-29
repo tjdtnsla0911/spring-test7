@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class MypageUpdateResponseDto {
+public class MypageUpdateRespDto {
 	private String profile;
 	private String email;
 	private String name;

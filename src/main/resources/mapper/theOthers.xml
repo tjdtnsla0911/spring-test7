@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.aruerue.shop.repository.Repository">
+
+<select id="findHomeAd" resultType="com.aruerue.shop.controller.dto.home.HomeAdResoDto">
+SELECT id, bgimg
+FROM product
+where ad=true;
+</select>
+
+
+<select id="findNotice" resultType="com.aruerue.shop.controller.dto.home.HomeNoticeRespDto">
+SELECT id, thumb
+FROM notice;
+</select>
+
+<select id="findProducts" resultType="com.aruerue.shop.controller.dto.home.HomeProductRespDto">
+select id, thumb, title, price, discounted, sale, newly, best
+from product;
+</select>
+
+<select id="findReviews" resultType="com.aruerue.shop.controller.dto.home.HomeReviewRespDto">
+select r.content, p.title, p.id, u.username
+from review r left outer join user u
+on r.userId = u.id
+left outer join product p
+on r.productId = p.id;
+</select>
+
+<select id="findProductsByC" resultType="com.aruerue.shop.controller.dto.ShopRespDto">
+SELECT c.type, p.categoryId, p.thumb, p.title, p.price, p.discounted, p.sale, p.newly, p.best
+FROM product p LEFT OUTER JOIN category c
+ON p.categoryId = c.id;
+</select>
+
+
+
+
+
+</mapper>

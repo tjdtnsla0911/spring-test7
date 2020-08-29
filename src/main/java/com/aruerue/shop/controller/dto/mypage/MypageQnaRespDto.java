@@ -14,9 +14,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class MypagePointResponseDto {
-	private int point;
-	private String reason;
-	private Timestamp historyDate;
+public class MypageQnaRespDto {
+	private int id;
+	private String title;
+	private String content;
+	private Timestamp createDate;
 
 }

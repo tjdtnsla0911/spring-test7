@@ -14,11 +14,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class MypageCouponResponseDto {
-	private int id;
-	private String code;
-	private Timestamp validityStart;
-	private Timestamp validityEnd;
-	private int availability;
+public class MypagePointRespDto {
+	private int point;
+	private String reason;
+	private Timestamp historyDate;
 
 }
