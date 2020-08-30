@@ -205,20 +205,20 @@ values('dnjswo','dnjswo1234','dnjswop321@nate.com','이원재','남','010-2322-7
 
 #product 더미데이터
 insert into product(title,thumb,price,disc,ad,discounted,content,categoryId,bgImg, sale, newly, best)
-values ('프레시 런드리 디터전트','thumb의 경로1',28000,'베이비 런드리 디터전트(무향)1L*1ea',true,27000,'content1',1,'bgImg의 경로1', true, false, false);
+values ('프레시 런드리 디터전트','/img/item1_product.png',28000,'베이비 런드리 디터전트(무향)1L*1ea',true,27000,'content1',1,'/img/main2.jpg', true, false, false);
 insert into product(title,thumb,price,disc,ad,discounted,content,categoryId,bgImg, sale, newly, best)
-values ('패밀리 키친 세트','thumb의 경로2',40000,'프레시 디시 앤 프루트 워시 (오렌지) 500ml * 1ea 베이비 보틀 앤 토이 워시 (무향) 500ml * 1ea',true,null,'content2',2,'bgImg의 경로2', false, true, false);
+values ('패밀리 키친 세트','/img/item2_product.png',40000,'프레시 디시 앤 프루트 워시 (오렌지) 500ml * 1ea 베이비 보틀 앤 토이 워시 (무향) 500ml * 1ea',true,null,'content2',2,'/img/main2.jpg', false, true, false);
 insert into product(title,thumb,price,disc,ad,discounted,content,categoryId,bgImg, sale, newly, best)
-values ('기프트 세트','thumb의 경로3',63000,'OPTION. 구성품 택1 (키친 세트,리빙케어 세트, 런드미 세트중) OPTION 2. 박스 색상 택1 (프레시 네이버,베이비 민트 중)',false,39000,'content3',2,'bgImg의 경로3', true, false, false);
+values ('기프트 세트','/img/item3_product.png',63000,'OPTION. 구성품 택1 (키친 세트,리빙케어 세트, 런드미 세트중) OPTION 2. 박스 색상 택1 (프레시 네이버,베이비 민트 중)',false,39000,'content3',2,'/img/main3.jpg', true, false, false);
 
 
 #review 더미데이터
 insert into review(productId,content,userId,createDate,star,img,existenceOfImg,orderId)
-values(1,'너무비싸서 놀랫네요..',1,now(),5,'img의 경로1',true,1);
+values(1,'너무비싸서 놀랫네요..',1,now(),5,'/img/home_review1',true,1);
 insert into review(productId,content,userId,createDate,star,img,existenceOfImg,orderId)
-values(2,'아르아르 믿을수가없다',2,now(),1,'img의 경로2',true,1);
+values(2,'아르아르 믿을수가없다',2,now(),1,'/img/home_review2',true,1);
 insert into review(productId,content,userId,createDate,star,img,existenceOfImg,orderId)
-values(1,'너무비싸서 놀랫네요..',3,now(),3,'img의 경로1',true,1);
+values(1,'너무비싸서 놀랫네요..',3,now(),3,'/img/home_review2',true,1);
 
 #recomment 더미데이터
 insert into recomment(reviewId,comment,createDate)

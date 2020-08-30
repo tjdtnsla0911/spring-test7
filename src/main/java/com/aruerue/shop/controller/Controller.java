@@ -36,7 +36,7 @@ public class Controller {
 	private final Repository repository;
 
 	@GetMapping({" ","/"})
-	public String home() {		
+	public HomeResponseDto home() {		
 		List<HomeAdResoDto> homeAdResoDtos = repository.findHomeAd();
 		List<HomeNoticeRespDto> homeNoticeRespDtos = repository.findNotice();
 		List<HomeProductRespDto> homeProductRespDtos = repository.findProductsForHome();
@@ -48,7 +48,7 @@ public class Controller {
 				.homeProductRespDto(homeProductRespDtos)
 				.homeReviewRespDto(homeReviewRespDtos)
 				.build();
-		return homeResponseDto.getHomeAdResoDto()+" 메인화면입니다.";
+		return homeResponseDto;
 	}
 	
 	@GetMapping("/shop")
