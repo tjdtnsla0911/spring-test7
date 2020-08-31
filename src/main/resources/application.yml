@@ -12,6 +12,3 @@ spring:
     url: jdbc:mysql://localhost:3306/areuareu?serverTimezone=Asia/Seoul
     username: cos
     password: cos1234
-    
-file:
-  path: C:/src/jwtreact/aruerue-back/src/main/resources/upload/
