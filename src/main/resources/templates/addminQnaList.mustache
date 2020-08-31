@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Bootstrap Example</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<style type="text/css">
+@import url(http://fonts.googleapis.com/css?family=Calibri:400,300,700);
+
+ body {
+     background-color: #673AB7;
+     font-family: 'Calibri', sans-serif !important
+ }
+
+ .container {
+     margin-top: 100px
+ }
+
+ .card {
+     position: relative;
+     display: -webkit-box;
+     display: -ms-flexbox;
+     display: flex;
+     -webkit-box-orient: vertical;
+     -webkit-box-direction: normal;
+     -ms-flex-direction: column;
+     flex-direction: column;
+     min-width: 0;
+     word-wrap: break-word;
+     background-color: #fff;
+     background-clip: border-box;
+     border: 0px solid transparent;
+     border-radius: 0px
+ }
+ }
+
+ .card-body {
+     -webkit-box-flex: 1;
+     -ms-flex: 1 1 auto;
+     flex: 1 1 auto;
+     padding: 1.25rem
+ }
+
+ .card .card-title {
+     position: relative;
+     font-weight: 600;
+     margin-bottom: 10px
+ }
+
+ .table {
+     width: 100%;
+     max-width: 100%;
+     margin-bottom: 1rem;
+     background-color: transparent
+ }
+
+ * {
+     outline: none
+ }
+
+ .table th,
+ .table thead th {
+     font-weight: 500
+ }
+
+ .table thead th {
+     vertical-align: bottom;
+     border-bottom: 2px solid #dee2e6
+ }
+
+ .table th {
+     padding: 1rem;
+     vertical-align: top;
+     border-top: 1px solid #dee2e6
+ }
+
+ .table th,
+ .table thead th {
+     font-weight: 500
+ }
+
+ th {
+     text-align: inherit
+ }
+
+ .m-b-20 {
+     margin-bottom: 20px
+ }
+
+ .customcheckbox {
+     display: block;
+     position: relative;
+     padding-left: 24px;
+     font-weight: 100;
+     margin-bottom: 12px;
+     cursor: pointer;
+     font-size: 22px;
+     -webkit-user-select: none;
+     -moz-user-select: none;
+     -ms-user-select: none;
+     user-select: none
+ }
+
+ .customcheckbox input {
+     position: absolute;
+     opacity: 0;
+     cursor: pointer
+ }
+
+ .checkmark {
+     position: absolute;
+     top: -3px;
+     left: 0;
+     height: 20px;
+     width: 20px;
+     background-color: #CDCDCD;
+     border-radius: 6px
+ }
+
+ .customcheckbox input:checked~.checkmark {
+     background-color: #2196BB
+ }
+
+ .customcheckbox .checkmark:after {
+     left: 8px;
+     top: 4px;
+     width: 5px;
+     height: 10px;
+     border: solid white;
+     border-width: 0 3px 3px 0;
+     -webkit-transform: rotate(45deg);
+     -ms-transform: rotate(45deg);
+     transform: rotate(45deg)
+ }
+</style>
+
+</head>
+<body>
+<button onclick="addqna()">새로고침</button>
+	<button onclick="replay()">유저페이지</button>
+	<button onclick="related()">관련상품</button>
+	<button onclick="back()">전체상품</button>
+	<button onclick="crud()">상품등록</button>
+
+
+	<script>
+		function addqna(){
+			location.href="/addqna";
+		}
+		function crud(){
+			location.href="/axios";
+		}
+
+		function replay() {
+			location.href = "/userlist";
+		}
+		function back() {
+			location.href = "/list";
+		}
+		function related() {
+			location.href = "/relatedProducts";
+		}
+	</script>
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body text-center">
+                    <h2 class="card-title m-b-0">관리자 Qna리스트입니다.</h2>
+                </div>
+                <div class="table-responsive">
+
+                    <table class="table">
+                        <thead class="thead-light">
+                            <tr>
+                                <th> <label class="customcheckbox m-b-20"> <input type="checkbox" id="mainCheckbox"> <span class="checkmark"></span> </label> </th>
+                                <th scope="col">id</th>
+                                <th scope="col">qnaTitle</th>
+                                <th scope="col">content</th>
+                                <th scope="col">username</th>
+                                <th scope="col">CreateDate</th>
+                                <th scope="col">answer</th>
+                                <th scope="col">기능</th>
+
+
+
+                            </tr>
+                        </thead>
+                        <tbody class="customtable">
+                        {{#qnaList}}
+                            <tr>
+                                <th> <label class="customcheckbox"> <input type="checkbox" class="listCheckbox"> <span class="checkmark"></span> </label> </th>
+                                <td>{{id}}</td>
+                                <td>{{qnaTitle}}</td>
+                                <td>{{username}}</td>
+                                <td>{{CreateDate}}</td>
+                                <td>{{answer2}}</td>
+                                <td>{{userId}}</td>
+
+                                <td><button class="btn-delete" id="bt-delete-{{id}}" style="WIDTH: 60pt; HEIGHT: 20pt">삭제하기</button> <br />
+					<!--  	<button type="button" data-toggle="modal" data-target="#myModal{{id}}" style="WIDTH: 60pt; HEIGHT: 20pt">수정하기</button>-->
+
+						<br/>
+						  <form action="/anwser">
+						<input type="hidden" value="{{id}}" id="id" name="id" class="id">
+						<input type="hidden" value="{{qnaTitle}}" id="qnaTitle" name="qnaTitle" class="qnaTitle">
+						<input type="hidden" value="{{content}}" id="content" name="content" class="content">
+						<input type="hidden" value="{{CreateDate}}" id="CreateDate" name="CreateDate" class="CreateDate">
+						<input type="hidden" value="{{answer2}}" id="answer2" name="answer2" class="answer2">
+						<input type="hidden" value="{{username}}" id="username" name="username" class="username">
+						<input type="hidden" value="{{userId}}" id="userId" name="userId" class="username">
+
+						<input type="hidden" value="{{productId}}" id="productId" name="productId" class="username">
+						<button  style="WIDTH: 60pt; HEIGHT: 20pt" >답변하기</button>
+						</form>
+						</td>
+
+	<form>
+
+			<div class="modal fade" id="myModal{{id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+				<div class="modal-dialog" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+							<h4 class="modal-title" id="myModalLabel">글 상세 보기</h4>
+						</div>
+						<div class="modal-body">
+
+
+							 <br /> <br />
+							qnaTitle :<input type="text"
+								id="qnaTitle{{id}}" class="qnaTitle" name="qnaTitle" value="{{qnaTitle}}" /> <br /> <br />
+
+
+								content : <input type="text" id="content{{id}}" class="content" name="content"
+								value="{{content}}" /> <br /> <br />
+
+								username : <input type="text" id="username{{id}}" class="username" name="username" value="{{username}}" /> <br /> <br />
+
+
+							CreateDate : <input
+								type="text" id="CreateDate{{id}}" class="CreateDate" name="CreateDate" value="{{CreateDate}}" /> <br /> <br />
+
+					<!-------------------------------------------------- 히든영역 ------------------------------------------------------------------>
+								<input type="hidden" id="id{{id}}" class="id" value="{{id}}"/>
+
+
+
+
+
+					<br />
+
+
+						</div>
+
+						<div class="modal-footer">
+
+							<input class="btn-update" type="button" id="bt-update-{{id}}" style="WIDTH: 60pt; HEIGHT: 20pt" value="수정하기" />
+
+							<button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
+						</div>
+
+					</div>
+				</div>
+			</div>
+
+
+
+		</form>
+
+
+
+                            </tr>
+                              {{/qnaList}}
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<script src="/js/addminQnaList.js"></script>
+</html>
+

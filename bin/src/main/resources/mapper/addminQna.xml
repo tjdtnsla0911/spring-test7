@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.aruerue.shop.repository.AddminQnaRepository">
+<select id="qnaList" resultType="com.aruerue.shop.addminDto.AddminQnaDto">
+select q.id,q.title as "qnaTitle" ,q.content,us.username,pro.title ,q.createDate,q.answer,q.productid,q.userid
+from qna q inner join  product pro inner join user us inner join product_status pst
+on pro.id=q.productid and us.id = q.userid and pro.id = pst.productid;
+</select>
+
+<select id="selectQnaComment" resultType="com.aruerue.shop.addminDto.AddminQnaDto">
+select * from Qnarecomment where qnaId = #{id}
+</select>
+
+
+
+<delete id="qnaDelete">
+delete from qna
+	where id=#{id}
+</delete>
+
+
+<update id="qnaUpdate">
+update qna set answer = #{answer} where id=#{id}
+</update>
+
+<insert id="qnaRecommentSave">
+INSERT INTO Qnarecomment (qnaId,qnaComment)
+values(#{id},#{qnaComment})
+</insert>
+
+</mapper>
