@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.aruerue.shop.repository.MyPageRepository">
+
+<select id="findOrdersById" resultType="com.aruerue.shop.controller.dto.mypage.MypageOrdersResponseDto">
+SELECT o.id, o.orderDate, o.totalPrice, o.howToPay, od.stats, p.title, o.userId
+FROM orders_detail od LEFT OUTER JOIN orders o
+ON od.orderId = o.id 
+LEFT OUTER JOIN product p 
+ON od.productId = p.id
+WHERE o.userId = (
+SELECT u.id
+FROM orders o LEFT OUTER JOIN user u
+ON o.userId = u.id
+WHERE u.id = #{id})
+</select>
+
+<select id="findWishlistsById" resultType="com.aruerue.shop.controller.dto.mypage.MypageWishResponseDto">
+SELECT p.thumb, p.title, p.price, p.discounted, p.sale, p.newly, p.best
+FROM wishlist w LEFT OUTER JOIN product p
+ON w.productId = p.id
+WHERE w.userId in (SELECT u.id FROM wishlist w LEFT OUTER JOIN user u ON w.userId = u.id WHERE u.id = #{id});
+</select>
+
+<select id="findCancleById" resultType="com.aruerue.shop.controller.dto.mypage.MypageCancleRespDto">
+SELECT od.orderId, od.productId, od.quantity, od.stats, p.title, p.thumb
+FROM orders_detail od LEFT OUTER JOIN orders o
+ON od.orderId = o.id
+LEFT OUTER JOIN product p
+ON od.productId = p.id
+WHERE o.userId = #{id};
+</select>
+
+<select id="findCouponById" resultType="com.aruerue.shop.controller.dto.mypage.MypageCouponRespDto">
+SELECT c.id, c.code, c.validityStart, c.validityEnd, c.availability
+FROM user u LEFT OUTER JOIN coupon c
+ON u.id = c.userId
+WHERE u.id = #{id};
+</select>
+
+<select id="findPointById" resultType="com.aruerue.shop.controller.dto.mypage.MypagePointRespDto">
+SELECT p.point, p.reason, p.historyDate
+FROM user u LEFT OUTER JOIN point p
+ON u.id = p.userId
+WHERE u.id = #{id};
+</select>
+
+<select id="findQnaById" resultType="com.aruerue.shop.controller.dto.mypage.MypageQnaRespDto">
+SELECT q.id, q.title, q.content, q.createDate
+FROM qna q LEFT OUTER JOIN user u
+ON u.id = q.userId
+WHERE u.id = #{id};
+</select>
+
+<select id="findUserById" resultType="com.aruerue.shop.controller.dto.mypage.MypageUpdateRespDto">
+SELECT u.profile, u.email, u.name, u.gender, u.phone, u.address, u.detail_address, u.birthday 
+FROM USER u
+WHERE u.id = #{id};
+</select>
+
+<delete id="deleteByid">
+DELETE FROM user WHERE id = #{id};
+</delete>
+
+
+
+
+</mapper>

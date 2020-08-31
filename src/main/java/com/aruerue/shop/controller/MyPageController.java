@@ -1,60 +1,86 @@
 package com.aruerue.shop.controller;
 
+import java.util.List;
+
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.aruerue.shop.controller.dto.CommonRespDto;
+import com.aruerue.shop.controller.dto.mypage.MypageCancleRespDto;
+import com.aruerue.shop.controller.dto.mypage.MypageCouponRespDto;
+import com.aruerue.shop.controller.dto.mypage.MypageOrdersResponseDto;
+import com.aruerue.shop.controller.dto.mypage.MypagePointRespDto;
+import com.aruerue.shop.controller.dto.mypage.MypageQnaRespDto;
+import com.aruerue.shop.controller.dto.mypage.MypageUpdateRespDto;
+import com.aruerue.shop.controller.dto.mypage.MypageWishResponseDto;
+import com.aruerue.shop.repository.MyPageRepository;
+
+import lombok.RequiredArgsConstructor;
+
+@RequiredArgsConstructor
 @RestController
 public class MyPageController {
 
+	private final MyPageRepository myPageRepository;
+
 	@PostMapping("/shop_mypage/{userId}/order")
 	public String mypageOrder(@PathVariable int userId) {
-		
-		return userId+"마이페이지 주문조회 화면 입니다.";
+		List<MypageOrdersResponseDto> mypageOrdersResponseDto = (List<MypageOrdersResponseDto>) myPageRepository
+				.findOrdersById(userId);
+		return mypageOrdersResponseDto + "마이페이지 주문조회 화면 입니다.";
 	}
-	
+
 	@PostMapping("/shop_mypage/{userId}/wish_list")
 	public String mypageWish(@PathVariable int userId) {
-		
-		return "마이페이지 WishList 화면 입니다.";
+		List<MypageWishResponseDto> mypageWishResponseDto = (List<MypageWishResponseDto>) myPageRepository
+				.findWishlistsById(userId);
+		return mypageWishResponseDto + "마이페이지 WishList 화면 입니다.";
 	}
-	
+
 	@PostMapping("/shop_mypage/{userId}/cancle")
 	public String mypageCart(@PathVariable int userId) {
-		
-		return "마이페이지  취소/교환/반품 화면 입니다.";
+		List<MypageCancleRespDto> mypageCancleRespDto = (List<MypageCancleRespDto>) myPageRepository
+				.findCancleById(userId);
+		return mypageCancleRespDto + "마이페이지  취소/교환/반품 화면 입니다.";
 	}
-	
+
 	@PostMapping("/shop_mypage/{userId}/coupon")
 	public String mypageCoupon(@PathVariable int userId) {
-		
-		return "마이페이지 쿠폰화면 입니다.";
+		List<MypageCouponRespDto> mypageCouponRespDto = (List<MypageCouponRespDto>) myPageRepository
+				.findCouponById(userId);
+		return mypageCouponRespDto+ "마이페이지 쿠폰화면 입니다.";
 	}
-	
+
 	@PostMapping("/shop_mypage/{userId}/point")
 	public String mypagePoint(@PathVariable int userId) {
-		
-		return "마이페이지 포인트 화면 입니다.";
+		List<MypagePointRespDto> mypagePointRespDto = (List<MypagePointRespDto>) myPageRepository
+				.findPointById(userId);
+
+		return mypagePointRespDto+ "마이페이지 포인트 화면 입니다.";
 	}
-	
+
 	@PostMapping("/shop_mypage/{userId}/qna")
 	public String mypageQnA(@PathVariable int userId) {
-		
-		return "마이페이지 1:1 문의  화면 입니다.";
+		List<MypageQnaRespDto> mypageQnaRespDto = (List<MypageQnaRespDto>) myPageRepository
+				.findQnaById(userId);
+		return mypageQnaRespDto+"마이페이지 1:1 문의  화면 입니다.";
 	}
-	
+
 	@PostMapping("/shop_mypage/{userId}/update")
 	public String mypageUpdate(@PathVariable int userId) {
-		
-		return "마이페이지 회원정보 수정  화면 입니다.";
+		MypageUpdateRespDto mypageUpdateRespDto = myPageRepository
+				.findUserById(userId);
+		return mypageUpdateRespDto+ "마이페이지 회원정보 수정  화면 입니다.";
 	}
-	
-	@PostMapping("/shop_mypage/{userId}/Withdrawal")
-	public String mypageWithdrawal(@PathVariable int userId) {
-		
-		return "마이페이지 회원탈퇴  화면 입니다.";
+
+	@PostMapping("/shop_mypage/{userId}/withdrawal")
+	public CommonRespDto<?> mypageWithdrawal(@PathVariable int userId) {
+		myPageRepository.deleteByid(userId);
+		if(myPageRepository.findUserById(userId) == null) {
+			System.out.println("회원탈퇴가 잘 진행 되었습니다.");
+		};				
+		return new CommonRespDto<String>(1, "회원탈퇴가 잘 진행되었습니다.");
 	}
-	
-	
-	
+
 }

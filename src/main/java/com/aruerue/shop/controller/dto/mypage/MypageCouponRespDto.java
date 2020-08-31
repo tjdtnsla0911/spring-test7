@@ -14,10 +14,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class MypageQnaResponseDto {
+public class MypageCouponRespDto {
 	private int id;
-	private String title;
-	private String content;
-	private Timestamp createDate;
+	private String code;
+	private Timestamp validityStart;
+	private Timestamp validityEnd;
+	private int availability;
 
 }
