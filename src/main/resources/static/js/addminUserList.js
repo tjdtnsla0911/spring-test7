@@ -14,32 +14,6 @@ $(document).ready(function(){
     });
 });
 
-	var sel_file;
-
-	$(document).ready(function() {
-		$("#input_img").on("change", handleImgFileSelect);
-	});
-	console.log($("#input_img").val());
-
-	function handleImgFileSelect(e) {
-		var files = e.target.files;
-		var filesArr = Array.prototype.slice.call(files);
-
-		filesArr.forEach(function(f) {
-			if (!f.type.match("image.*")) {
-				alert("확장자는 이미지 확장자만 가능합니다.");
-				return;
-			}
-
-			sel_file = f;
-
-			var reader = new FileReader();
-			reader.onload = function(e) {
-				$("#img").attr("src", e.target.result);
-			}
-			reader.readAsDataURL(f);
-		});
-	}
 
 
 let index = {
@@ -76,11 +50,13 @@ let index = {
 					disc: $("#disc").val(),
 					discounted: $("#discounted").val(),
 					content: $("#content").val(),
+					bgImg: $("#fuck").val(),
 					radioSale : $('input:radio[name="radioSale"]:checked').val(),
 					radioAd : $('input:radio[name="radioAd"]:checked').val(),
 					radioParentTypeId : $('input:radio[name="radioParentTypeId"]:checked').val(),
 					radioBest : $('input:radio[name="radioBest"]:checked').val(),
 					radioNew : $('input:radio[name="radioNew"]:checked').val(),
+
 			};
 			console.log('data = ',data);
 			if(data.bgImg.length < 444){
@@ -131,34 +107,43 @@ let index = {
 			let data2 = {
 					id: temp
 			};
-			console.log('data2 = ',data2);
+			console.log('data의 id = ',data2.id);
 
 			var formData = new FormData();
 			formData.append('id', $("#id"+data2.id).val());
-			formData.append('title', $("#modaltitle"+data2.id).val());
-			formData.append('thumb', $("#modalthumb"+data2.id).val());
-			formData.append('price',  $("#modalprice"+data2.id).val());
-			formData.append('disc', $("#modaldisc"+data2.id).val());
-			formData.append('discounted', $("#modaldiscounted"+data2.id).val());
-			formData.append('content', $("#modalcontent"+data2.id).val());
-			formData.append('bgImg', $("#fuck"+data2.id).val());
-			formData.append('file', $("#file"+data2.id)[0].files[0]);
-			formData.append('file2', $("#file2"+data2.id)[0].files[0]);
+			formData.append('username', $("#modalUsername"+data2.id).val());
+			formData.append('email', $("#modalEmail"+data2.id).val());
+			formData.append('name', $("#modalName"+data2.id).val());
+			formData.append('gender',  $("#modalGender"+data2.id).val());
+			formData.append('phone', $("#modalPhone"+data2.id).val());
+			formData.append('providerId', $("#modalProviderId"+data2.id).val());
+			formData.append('total_amount', $("#modalTotal_amount"+data2.id).val());
+			formData.append('role', $("#modalRole"+data2.id).val());
+			//formData.append('cancel', $("#modalCancel"+data2.id).val());
+			formData.append('createDate', $("#modalCreateDate"+data2.id).val());
+			formData.append('password', $("#modalPassword"+data2.id).val());
+			formData.append('provider', $("#modalProvider"+data2.id).val());
+			formData.append('birthday', $("#modalBirthday"+data2.id).val());
+			formData.append('address', $("#modalAddress"+data2.id).val());
+			formData.append('detail_address', $("#modalDetail_address"+data2.id).val());
+			formData.append('profile2', $("#modalProfile"+data2.id)[0].files[0]);
 
 
+console.log('사진은? = ',$("#modalProfile"+data2.id)[0].files[0]);
+console.log('이름은? = ',$("#modalUsername"+data2.id).val());
+console.log('name은 ? = ',$("#modalName"+data2.id).val());
 //
 //if($("#file"+data2.id)[0].files[0]==undefined){
 //
 //}
-console.log('file1 = '+formData.thumb);
-console.log('file1 = '+formData.bgImg);
+console.log('뽐데이터 = ',formData);
 
 
 //console.log('file = '+$("#file2"+data2.id)[0].files[0]);
 //console.log('formData = '+$("#fuck"+data2.id).val());
 			$.ajax({
 			type: "PUT",
-			url: "/change/"+data2.id,
+			url: "/changeUser/"+data2.id,
 			contentType: 'multipart/form-data',
 			data: formData, // http body데이터
 			 processData: false,
@@ -222,7 +207,7 @@ console.log('file1 = '+formData.bgImg);
 			console.log('최종 = ',data.id);
 			$.ajax({
 				type: "delete",
-				url: "/listDelete/"+data.id,
+				url: "/listUserDelete/"+data.id,
 				data: JSON.stringify(data), // http body데이터
 				contentType: "application/json; charset=utf-8",// body데이터가 어떤
 																// 타입인지(MIME)

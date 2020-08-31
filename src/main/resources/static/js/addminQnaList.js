@@ -1,3 +1,4 @@
+
 $(document).ready(function(){
 	console.log('시작 = ',$('input:radio[name="radioSale"]:checked').val());
     // 라디오버튼 클릭시 이벤트 발생
@@ -60,6 +61,15 @@ let index = {
 			$("#start").on("click",()=>{
 				this.start();
 			});
+
+			$(".btn-answer").on("click",(e)=>{
+				this.answer(e);
+			});
+
+
+			$(".btn-qnaUpdate").on("click",()=>{
+				this.qnaUpdate();
+			});
 		},
 
 
@@ -76,11 +86,13 @@ let index = {
 					disc: $("#disc").val(),
 					discounted: $("#discounted").val(),
 					content: $("#content").val(),
+					bgImg: $("#fuck").val(),
 					radioSale : $('input:radio[name="radioSale"]:checked').val(),
 					radioAd : $('input:radio[name="radioAd"]:checked').val(),
 					radioParentTypeId : $('input:radio[name="radioParentTypeId"]:checked').val(),
 					radioBest : $('input:radio[name="radioBest"]:checked').val(),
 					radioNew : $('input:radio[name="radioNew"]:checked').val(),
+
 			};
 			console.log('data = ',data);
 			if(data.bgImg.length < 444){
@@ -177,6 +189,42 @@ console.log('file1 = '+formData.bgImg);
 
 
 
+		qnaUpdate: function(){
+
+
+			let data3 = {
+					id:$("#id").val(),
+					qnaTitle:$("#qnaTitle").val(),
+					username:$("#username").val(),
+					CreateDate: $("#createDate").val(),
+					content: $("#content").val(),
+					comment: $("#comment").val(),
+
+
+
+			};
+
+console.log('데이터아이디 =',data3.id);
+console.log('데이터=',data3);
+
+
+			$.ajax({
+			type: "PUT",
+			url: "/qnaUpdate/"+data3.id,
+			data: JSON.stringify(data3),
+			contentType: "application/json; charset=utf-8",// body데이터가 어떤															// 타입인지(MIME)
+			dataType: "text"
+			}).done(function(resp){
+				alert("물품변경이 완료되었습니다.");
+				// console.log(resp);
+				 location.href = "/addqna";
+			}).fail(function(error){
+				alert(JSON.stringify(error));
+			});
+		},
+
+
+
 
 		start: function(){
 
@@ -222,7 +270,7 @@ console.log('file1 = '+formData.bgImg);
 			console.log('최종 = ',data.id);
 			$.ajax({
 				type: "delete",
-				url: "/listDelete/"+data.id,
+				url: "/qnaDelete/"+data.id,
 				data: JSON.stringify(data), // http body데이터
 				contentType: "application/json; charset=utf-8",// body데이터가 어떤
 																// 타입인지(MIME)
@@ -231,13 +279,57 @@ console.log('file1 = '+formData.bgImg);
 			}).done(function(resp){
 				alert("회원삭제가 완료되었습니다.");
 				console.log(resp);
-				location.href = "/list";
+				location.href = "/addqna";
 
 			}).fail(function(error){
 				alert(JSON.stringify(error));
 			});
 
 		},
+
+     //답변하는곳
+		answer: function(e){
+
+			console.log('e =',e);
+			let temp = (e.target.id).replace("bt-answer-","");
+
+			let data2 = {
+					id: temp
+			};
+
+
+
+//
+//if($("#file"+data2.id)[0].files[0]==undefined){
+//
+//}
+
+
+
+//console.log('file = '+$("#file2"+data2.id)[0].files[0]);
+//console.log('formData = '+$("#fuck"+data2.id).val());
+			$.ajax({
+			type: "Post",
+			url: "/anwser/"+data2.id,
+			data: JSON.stringify(data2), // http body데이터
+			contentType: "application/json; charset=utf-8",
+		       // enctype: 'multipart/form-data',// body데이터가 어떤 타입인지(MIME)
+			dataType: "text" // 요청을 서버로해서 응답이 왔을 때 기본적으로 모든 것이 문자열 (생긴게
+		// ssunsband.tistory.com/entry/Jquery-Ajax를-이용한-파일-업로드FormData-사용
+		// [ssunsband] // 요청을 서버로해서 응답이 왔을 때 기본적으로 모든 것이 문자열 (생긴게 json이라면) =>
+		// javascript오브젝트로 변경
+			}).done(function(resp){
+				alert("물품변경이 완료되었습니다.");
+				// console.log(resp);
+				// location.href = "/addminQnaRecomment";
+
+			}).fail(function(error){
+				alert(JSON.stringify(error));
+			});
+		},
+
+
+
 }
 
 function encodeImageFileAsURL(e) {

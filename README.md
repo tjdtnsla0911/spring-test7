@@ -217,7 +217,7 @@ insert into product(title,thumb,price,disc,ad,discounted,content,categoryId,bgIm
 values ('패밀리 키친 세트','/img/item2_product.png',40000,'프레시 디시 앤 프루트 워시 (오렌지) 500ml * 1ea 베이비 보틀 앤 토이 워시 (무향) 500ml * 1ea',true,null,'content2',2,'/img/main2.jpg', false, true, false);
 insert into product(title,thumb,price,disc,ad,discounted,content,categoryId,bgImg, sale, newly, best)
 values ('기프트 세트','/img/item3_product.png',63000,'OPTION. 구성품 택1 (키친 세트,리빙케어 세트, 런드미 세트중) OPTION 2. 박스 색상 택1 (프레시 네이버,베이비 민트 중)',false,39000,'content3',2,'/img/main3.jpg', true, false, false);
->>>>>>> 25a8dfef2ba0f7a9117c4969e8492538e63fb141
+
 
 
 #review 더미데이터
@@ -228,13 +228,6 @@ insert into review(productId,content,userId,createDate,star,img,existenceOfImg,o
 values(2,'아르아르 믿을수가없다',2,now(),1,'/img/home_review2.jpg',true,1);
 insert into review(productId,content,userId,createDate,star,img,existenceOfImg,orderId)
 values(1,'너무비싸서 놀랫네요..',3,now(),3,'/img/home_review1.jpg',true,1);
-=======
-values(1,'너무비싸서 놀랫네요..',1,now(),5,'/img/home_review1',true,1);
-insert into review(productId,content,userId,createDate,star,img,existenceOfImg,orderId)
-values(2,'아르아르 믿을수가없다',2,now(),1,'/img/home_review2',true,1);
-insert into review(productId,content,userId,createDate,star,img,existenceOfImg,orderId)
-values(1,'너무비싸서 놀랫네요..',3,now(),3,'/img/home_review2',true,1);
->>>>>>> 25a8dfef2ba0f7a9117c4969e8492538e63fb141
 
 #recomment 더미데이터
 insert into recomment(reviewId,comment,createDate)
@@ -529,3 +522,45 @@ values ("제목","내용");
 - ->mybatis generatedKey 검색
 
 # 내가 만든 쿼리문 꼭 한번 검사할것
+=======
+```
+내일 mysql 및 스프링 손도 봐야함
+그리고 새로운 테이블 추가댐
+
+
+```
+#새로만든 Qnarecomment 입니다
+create table  Qnarecomment(
+id int auto_increment primary key,
+qnaId int,
+qnaComment varchar(2000)
+)engine=InnoDB default charset=utf8;
+drop table Qnarecomment;
+
+#########################################3
+
+
+```
+use areuareu;
+select * from product;
+select * from product_status;
+select * from related_product;
+
+update related_product set relatedProductId = 0 where id=51;
+
+
+#이건 자식에 연결되어있는거
+select *
+from product pro inner join product_status pst inner join related_product rel
+on pro.id = pst.productid and pro.id = rel.relatedProductId;
+
+
+#이건 자식에 연결되어있는거
+select *
+from product pro inner join product_status pst inner join related_product rel
+on pro.id = pst.productid and pro.id = rel.parentProductid and rel.relatedProductId=23;
+
+select pro.title,pro.thumb,pro.price,pro.disc,pro.discounted,pro.content,pro.categoryId,pro.bgImg,pst.sale,pst.newly,pst.best,rel.parentProductId,rel.relatedProductId,ca.parentTypeId
+from product pro inner join related_product rel inner join product_status pst inner join category ca
+on pro.id= rel.parentProductId and pro.id = pst.productId and ca.parentTypeId = pro.categoryId;
+```
