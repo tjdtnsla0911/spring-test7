@@ -18,9 +18,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.aruerue.shop.addminDto.AddminQnaDto;
-import com.aruerue.shop.model.Qna;
 import com.aruerue.shop.model.product.Product;
 import com.aruerue.shop.model.product.Product_status;
+import com.aruerue.shop.model.qnA.Qna;
 import com.aruerue.shop.model.user.User;
 import com.aruerue.shop.repository.AddminQnaRepository;
 import com.aruerue.shop.repository.AddminRepository;

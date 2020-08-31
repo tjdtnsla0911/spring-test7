@@ -1,4 +1,6 @@
-package com.aruerue.shop.model;
+package com.aruerue.shop.model.qnA;
+
+import java.security.Timestamp;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -9,8 +11,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class QnaRecomment {
+public class CommentOnQnA {
 private int id;
-private int qnaId;
-private String qnaComment;
+private int qnAId;
+private String comment;
+private Timestamp createDate;
 }

@@ -1,4 +1,4 @@
-package com.aruerue.shop.model;
+package com.aruerue.shop.model.qnA;
 
 import java.sql.Timestamp;
 
