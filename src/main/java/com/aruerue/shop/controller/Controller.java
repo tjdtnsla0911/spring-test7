@@ -52,13 +52,13 @@ public class Controller {
 	}
 	
 	@GetMapping("/shop")
-	public String shop() {		
+	public List<ShopRespDto> shop() {		
 		List<ShopRespDto> ShopRespDtos = repository.findProductsForShop();		 
-		return ShopRespDtos+ " shop화면 입니다.";
+		return ShopRespDtos;
 	}
 	
 	@GetMapping("/shop_view/{id}")
-	public String shop_view(@PathVariable int id) {
+	public DetailResponseDto shop_view(@PathVariable int id) {
 		DetailProductRespDto detailProductRespDto = repository.findProductById(id);
 		List<DetailReviewRespDto> detailReviewRespDto = repository.findReviewsById(id);
 		List<DetailQnARespDto> detailQnARespDto = repository.findQnAById(id);
@@ -70,43 +70,43 @@ public class Controller {
 				.detailQnARespDto(detailQnARespDto)
 				.detailRelatedRespDto(detailRelatedRespDto)
 				.build();				
-		return detailResponseDto.getDetailRelatedRespDto() +" 상품 디테일 페이지 입니다.";
+		return detailResponseDto;
 	}
 	
 	@GetMapping("/review")
-	public String review() {
+	public List<ReviewRespDto> review() {
 		List<ReviewRespDto> reviewRespDto = repository.findReviews();		
-		return reviewRespDto+"review 게시판 화면 입니다.";
+		return reviewRespDto;
 	}
 	
 	@GetMapping("/review_detail/{id}")
-	public String reviewDetail(@PathVariable int id) {
+	public ReviewDetailRespDto reviewDetail(@PathVariable int id) {
 		ReviewDetailRespDto reviewDetailRespDto = repository.findReviewById(id);
-		return reviewDetailRespDto+"review detail 화면 입니다.";
+		return reviewDetailRespDto;
 	}
 		
 	@GetMapping("/notice")
-	public String notice() {
+	public List<NoticeRespDto> notice() {
 		List<NoticeRespDto> noticeRespDto = repository.findNotices();		
-		return noticeRespDto+"notice 게시판 화면 입니다.";
+		return noticeRespDto;
 	}
 	
 	@GetMapping("/notice_detail/{id}")
-	public String notice_detail(@PathVariable int id) {
+	public List<NoticeDetailsRespDto> notice_detail(@PathVariable int id) {
 		List<NoticeDetailsRespDto> noticeDetailsRespDto = repository.findNoticeById(id);		
-		return noticeDetailsRespDto+"notice detail 화면 입니다.";
+		return noticeDetailsRespDto;
 	}
 	
 	@GetMapping("/qna")
-	public String qna() {
+	public List<QnARespDto> qna() {
 		List<QnARespDto> qnARespDto = repository.findQnAs();
-		return qnARespDto+"qna 게시판 화면 입니다.";
+		return qnARespDto;
 	}
 	
 	@GetMapping("/shop_cart/{userId}")
-	public String cart(@PathVariable int userId) {
+	public List<CartRespDto> cart(@PathVariable int userId) {
 		List<CartRespDto> cartRespDto = repository.findCartsById(userId);
-		return cartRespDto + "장바구니 화면입니다." ;
+		return cartRespDto;
 	}	
 	
 	

@@ -25,17 +25,17 @@ public class MyPageController {
 	private final MyPageRepository myPageRepository;
 
 	@PostMapping("/shop_mypage/{userId}/order")
-	public String mypageOrder(@PathVariable int userId) {
+	public List<MypageOrdersResponseDto> mypageOrder(@PathVariable int userId) {
 		List<MypageOrdersResponseDto> mypageOrdersResponseDto = (List<MypageOrdersResponseDto>) myPageRepository
 				.findOrdersById(userId);
-		return mypageOrdersResponseDto + "마이페이지 주문조회 화면 입니다.";
+		return mypageOrdersResponseDto;
 	}
 
 	@PostMapping("/shop_mypage/{userId}/wish_list")
-	public String mypageWish(@PathVariable int userId) {
+	public List<MypageWishResponseDto> mypageWish(@PathVariable int userId) {
 		List<MypageWishResponseDto> mypageWishResponseDto = (List<MypageWishResponseDto>) myPageRepository
 				.findWishlistsById(userId);
-		return mypageWishResponseDto + "마이페이지 WishList 화면 입니다.";
+		return mypageWishResponseDto;
 	}
 
 	@PostMapping("/shop_mypage/{userId}/cancle")
@@ -53,25 +53,24 @@ public class MyPageController {
 	}
 
 	@PostMapping("/shop_mypage/{userId}/point")
-	public String mypagePoint(@PathVariable int userId) {
+	public List<MypagePointRespDto> mypagePoint(@PathVariable int userId) {
 		List<MypagePointRespDto> mypagePointRespDto = (List<MypagePointRespDto>) myPageRepository
 				.findPointById(userId);
-
-		return mypagePointRespDto+ "마이페이지 포인트 화면 입니다.";
+		return mypagePointRespDto;
 	}
 
 	@PostMapping("/shop_mypage/{userId}/qna")
-	public String mypageQnA(@PathVariable int userId) {
+	public List<MypageQnaRespDto> mypageQnA(@PathVariable int userId) {
 		List<MypageQnaRespDto> mypageQnaRespDto = (List<MypageQnaRespDto>) myPageRepository
 				.findQnaById(userId);
-		return mypageQnaRespDto+"마이페이지 1:1 문의  화면 입니다.";
+		return mypageQnaRespDto;
 	}
 
 	@PostMapping("/shop_mypage/{userId}/update")
-	public String mypageUpdate(@PathVariable int userId) {
+	public MypageUpdateRespDto mypageUpdate(@PathVariable int userId) {
 		MypageUpdateRespDto mypageUpdateRespDto = myPageRepository
 				.findUserById(userId);
-		return mypageUpdateRespDto+ "마이페이지 회원정보 수정  화면 입니다.";
+		return mypageUpdateRespDto;
 	}
 
 	@PostMapping("/shop_mypage/{userId}/withdrawal")
