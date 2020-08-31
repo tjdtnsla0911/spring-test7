@@ -5,8 +5,8 @@ import java.util.List;
 import com.aruerue.shop.addminDto.AddminDto;
 import com.aruerue.shop.model.product.Category;
 import com.aruerue.shop.model.product.Product;
-import com.aruerue.shop.model.product.Product_status;
-import com.aruerue.shop.model.product.Related_product;
+//import com.aruerue.shop.model.product.Product_status;
+//import com.aruerue.shop.model.product.Related_product;
 import com.aruerue.shop.model.user.User;
 
 public interface AddminRepository {

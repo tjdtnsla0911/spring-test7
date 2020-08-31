@@ -51,7 +51,7 @@
 </select>
 
 
-<select id="findQnAById" resultType="com.aruerue.shop.controller.dto.detail.DetailQnARespDto">
+<select id="findQnAByIdForDetail" resultType="com.aruerue.shop.controller.dto.detail.DetailQnARespDto">
 	SELECT q.answer, q.title, u.username, q.createDate, p.id
 	FROM qna q LEFT OUTER JOIN user u
 	ON q.userId = u.id
@@ -100,7 +100,7 @@
 	WHERE id = #{id};
 </select>
 
-<select id="findQnAs" resultType="com.aruerue.shop.controller.dto.QnARespDto">
+<select id="findQnAs" resultType="com.aruerue.shop.controller.dto.qnA.QnARespDto">
 	SELECT q.id, q.title, u.username, q.createDate
 	FROM qna q LEFT OUTER JOIN user u
 	ON q.userId = u.id;
@@ -111,6 +111,17 @@
 	FROM cart c INNER JOIN product p INNER JOIN user u
 	ON c.userId = u.id AND p.id = c.productId
 	WHERE u.id = #{id};
+</select>
+
+<select id="findQnADetailById" resultType="com.aruerue.shop.controller.dto.qnA.CommentOnQnARespDto">
+	SELECT q.createDate, q.content, p.thumb, p.title, coq.createDate, coq.comment
+	FROM qna q LEFT OUTER JOIN user u
+	ON q.userId = u.id
+	LEFT OUTER JOIN product p
+	ON q.productId = p.id
+	LEFT OUTER JOIN commentOnQnA coq
+	ON q.id = coq.qnaId
+	WHERE q.id=#{id};
 </select>
 
 

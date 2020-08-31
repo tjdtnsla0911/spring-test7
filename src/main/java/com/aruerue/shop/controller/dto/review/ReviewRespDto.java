@@ -22,5 +22,9 @@ public class ReviewRespDto {
 	private String username;
 	private Timestamp createDate;
 	private int star;
+	//////////////////
+	private int count;
+	private int photoCount;
+	
 
 }

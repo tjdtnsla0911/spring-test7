@@ -1,51 +1,30 @@
 package com.aruerue.shop.controller;
 
-import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.security.Principal;
-import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
-import java.util.Optional;
 import java.util.UUID;
-
-import javax.servlet.annotation.MultipartConfig;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartRequest;
-import org.springframework.web.servlet.resource.HttpResource;
 
 import com.aruerue.shop.addminDto.AddminDto;
-import com.aruerue.shop.controller.dto.ProductDto;
-import com.aruerue.shop.controller.dto.ResponseDto;
 import com.aruerue.shop.model.product.Product;
-import com.aruerue.shop.model.product.Related_product;
-import com.aruerue.shop.model.user.User;
 import com.aruerue.shop.repository.AddminRepository;
+
 
 @Controller
 //@MultipartConfig(maxFileSize=1024*1024*2,location = "c:\\upload")
@@ -136,6 +115,7 @@ public class AddminProductController {
 	@GetMapping("/axios")
 	public String index(Model model) {
 		System.out.println("axios에왔습니다");
+		
 		List<AddminDto> pro = addminRepository.addminDtoList();
 		model.addAttribute("list", pro);
 		System.out.println("axios 탓다");

@@ -2,6 +2,7 @@ package com.aruerue.shop.controller;
 
 import java.util.List;
 
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -14,6 +15,8 @@ import com.aruerue.shop.controller.dto.mypage.MypagePointRespDto;
 import com.aruerue.shop.controller.dto.mypage.MypageQnaRespDto;
 import com.aruerue.shop.controller.dto.mypage.MypageUpdateRespDto;
 import com.aruerue.shop.controller.dto.mypage.MypageWishResponseDto;
+import com.aruerue.shop.controller.dto.qnA.CommentOnQnARespDto;
+import com.aruerue.shop.controller.dto.review.ReviewDetailRespDto;
 import com.aruerue.shop.repository.MyPageRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -65,6 +68,7 @@ public class MyPageController {
 				.findQnaById(userId);
 		return mypageQnaRespDto;
 	}
+	
 
 	@PostMapping("/shop_mypage/{userId}/update")
 	public MypageUpdateRespDto mypageUpdate(@PathVariable int userId) {

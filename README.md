@@ -185,6 +185,13 @@ CREATE TABLE cart(# 종이에는 product_status에 따라서 다르다는데 모
     quantity int,
     price int
 ) engine=InnoDB default charset=utf8;
+
+CREATE TABLE commentOnQnA   (
+	id int auto_increment primary key,
+    qnAId  int,
+    comment   varchar(2000),
+    createDate  timestamp
+) engine=InnoDB default charset=utf8;
 ```
 
 # join과 test를 위한 데이터
@@ -325,6 +332,13 @@ values (2,1,1,40000);
 insert into cart(productId,userId,quantity,price)
 values (1,2,2,28000);
 
+#commentOnQnA 더미 데이터
+INSERT INTO commentOnQnA(qnAId, comment, createDate)
+values (1, '네~!', now());
+
+INSERT INTO commentOnQnA(qnAId, comment, createDate)
+values (2, '비누에서 거품이 나는 건 정상입니다~!', now());
+
 ```
 
 # 아르아르 dto를 위한 join
@@ -450,6 +464,378 @@ WHERE u.id = 1;
 
 ```
 
+Linda
+
+````
+
+//home (메인화면)
+GET
+"/",""           HomeResponseDto
+
+HomeAdResoDto
+#대문 dto
+SELECT id,bgimg
+FROM product
+where ad=true;
+
+
+HomeNoticeRespDto
+SELECT id, thumb
+FROM notice;
+
+
+HomeProductRespDto
+->Product, Product_Status
+```(X)
+select p.id, p.thumb, p.title, p.price, p.discounted,
+if(ps.sale is null, false, true) "sale",
+if(ps.newly is null, false, true) "newly",
+if(ps.best is null, false, true) "best "
+from product p left outer join product_status ps
+on p.id = ps.productId
+where p.id = 1;
+````
+
+status테이블 없앤다면
+
+```(O)
+select id, thumb, title, price, discounted, sale, newly, best
+from product
+where id = 1;
+```
+
+HomeReviewRespDto
+->Product
+->Product+User+Review
+
+```
+select r.content, p.title, p.id, u.username
+from review r left outer join user u
+on r.userId = u.id
+left outer join product p
+on r.productId = p.id;
+```
+
+// detail
+GET
+"/shop_view/{id}" ->상품아이디!  
+DetailRespDto
+
+DetailProductRespDto
+
+```
+select id, thumb, title, price, discounted, sale, newly, best, disc, content
+from product
+where id = 1;
+```
+
+DetailReviewRespDto
+->user + product + review +orders
+
+```
+SELECT r.userId, r.productId, r.content, r.star, r.createDate, r.orderId, r.img,
+(SELECT u.username from user u where u.id = r.userId) as username,
+(SELECT o.howtopay from orders o where o.id = r.orderId) as howToPay
+FROM product p LEFT OUTER JOIN review r
+ON p.id = r.productId
+WHERE p.id = 1;
+```
+
+DetailQnaRespDto
+->qna + user+product
+
+```
+## detail page -> qna부분입니다.
+SELECT q.answer, q.title, u.username, q.createDate, p.id
+FROM qna q LEFT OUTER JOIN user u
+ON q.userId = u.id
+LEFT OUTER JOIN product p
+ON q.productId = p.id
+WHERE q.productId = 2;
+```
+
+DetailRelatedRespDto
+->
+##detail page -> 관련상품 부분
+SELECT id, thumb, title, price, discounted, sale, newly, best  
+FROM product
+WHERE id IN (select relatedProductId from related_product where parentProductId= 2);
+
+//shop
+GET
+"/shop"
+
+ShopRespDto
+-> product + category
+
+```
+
+##dicounted가격을 update할때 sale 값을 fasle에서 true로 같이 변경해버리면 되지 자바에서
+## status테이블을 product테이블에 넣는다면 sale, newly, best,
+SELECT c.type, p.categoryId, p.thumb, p.title, p.price, p.discounted, p.sale, p.newly, p.best
+FROM product p LEFT OUTER JOIN category c
+ON p.categoryId = c.id;
+```
+
+//review
+GET
+"/review"
+ReviewResponseDto
+
+ReviewRespDto
+
+```
+SELECT r.id, p.title, r.content, u.username, r.createDate, r.star
+FROM review r LEFT OUTER JOIN product p
+ON r.productId  = p.id
+LEFT OUTER JOIN user u
+ON r.userId = u.id;
+```
+
+하나 누르면
+
+```ReviewDetailRespDto
+##review 하나 눌렀을 때 recomment(X)
+SELECT r.img , u.profile, r.star, u.username, r.createDate, o.howToPay, r.content, p.thumb, p.title
+FROM review r LEFT OUTER JOIN user u
+ON r.userId = u.id
+LEFT OUTER JOIN orders o
+ON r.orderId = o.id
+LEFT OUTER JOIN product p
+ON r.productId = p.id
+WHERE r.id=1;
+```
+
+/review#review_detail!/{id}
+/review_detail/{id}
+
+```
+##recomment(O) , 댓글 작성자 프로필사진이랑 이름은 "아르아르"고정으로
+SELECT r.img , u.profile, r.star, u.username, r.createDate, o.howToPay, r.content, p.thumb, p.title, rc.createDate, rc.comment
+FROM review r LEFT OUTER JOIN user u
+ON r.userId = u.id
+LEFT OUTER JOIN orders o
+ON r.orderId = o.id
+LEFT OUTER JOIN product p
+ON r.productId = p.id
+LEFT OUTER JOIN recomment rc
+ON r.id = rc.reviewId
+WHERE r.id=2;
+```
+
+//공지사항
+GET
+"/notice"
+
+NoticeRespDto
+
+```
+SELECT id, title, createDate, readCount
+FROM notice;
+```
+
+NoticeDetailsRespDto
+/notice_detail/{id}
+
+```
+##NoticeDetailsRespDto공지사항 하나 눌렀을 때
+SELECT id, title, createDate, readCount, content
+FROM notice
+WHERE id = 2;
+```
+
+//여기헤더
+//qna
+GET
+"/qna"
+
+QnARespDto
+
+```
+SELECT q.id, q.title, u.username, q.createDate
+FROM qna q LEFT OUTER JOIN user u
+ON q.userId = u.id;
+```
+
+여기에 qna 하나 눌렀을 때
+CommentOnQnARespDto
+
+로그인한 유저만 내 질문에 답변을 볼 수 있음..
+
+```
+SELECT q.createDate, q.content, p.thumb, p.title, coq.createDate, coq.comment
+FROM qna q LEFT OUTER JOIN user u
+ON q.userId = u.id
+LEFT OUTER JOIN product p
+ON q.productId = p.id
+LEFT OUTER JOIN commentOnQnA coq
+ON q.id = coq.qnaId
+WHERE q.id=2;
+```
+
+--mypage는 get으로 요청하면 안됨
+
+//mypage
+POST
+"/shop_mypage/{userId}/order"
+
+MypageOrdersResponseDto
+-> orders_detail + orders + product + user
+
+```
+SELECT o.id, o.orderDate, o.totalPrice, o.howToPay, od.stats, p.title, o.userId
+FROM orders_detail od LEFT OUTER JOIN orders o
+ON od.orderId = o.id
+LEFT OUTER JOIN product p
+ON od.productId = p.id
+WHERE o.userId = (
+SELECT u.id
+FROM orders o LEFT OUTER JOIN user u
+ON o.userId = u.id
+WHERE u.id = 1);
+```
+
+//wish_list
+POST
+"/shop_mypage/{userId}/wish_list"
+MypageWishResponseDto
+
+```
+SELECT p.thumb, p.title, p.price, p.discounted, p.sale, p.newly, p.best
+FROM wishlist w LEFT OUTER JOIN product p
+ON w.productId = p.id
+WHERE w.userId in (SELECT u.id FROM wishlist w LEFT OUTER JOIN user u ON w.userId = u.id WHERE u.id = 1);
+```
+
+//cancle
+POST
+"/shop_mypage/{userId}/cancle"
+MypageCancleRespDto
+##od.quantity는 뺄까...
+SELECT od.orderId, od.productId, od.quantity, od.stats, p.title, p.thumb
+FROM orders_detail od LEFT OUTER JOIN orders o
+ON od.orderId = o.id
+LEFT OUTER JOIN product p
+ON od.productId = p.id
+WHERE o.userId = 2;
+
+//coupon
+POST
+"/shop_mypage/{userId}/coupon"
+MypageCouponResponseDto
+
+```
+SELECT c.id, c.code, c.validityStart, c.validityEnd, c.availability
+FROM user u LEFT OUTER JOIN coupon c
+ON u.id = c.userId
+WHERE u.id = 1;
+```
+
+//point
+POST
+"/shop_mypage/{userId}/point"
+
+MypagePointRespDto
+
+```
+SELECT p.point, p.reason, p.historyDate
+FROM user u LEFT OUTER JOIN point p
+ON u.id = p.userId
+WHERE u.id = 1;
+```
+
+//qna (1:1 문의 부분)
+POST
+"/shop_mypage/{userId}/qna"
+MypageQnaRespDto
+
+```
+SELECT q.id, q.title, q.content, q.createDate
+FROM qna q LEFT OUTER JOIN user u
+ON u.id = q.userId
+WHERE u.id = 1;
+```
+
+여기에 qna 하나 눌렀을 때
+MypageCommentOnQnARespDto
+
+로그인한 유저만 내 질문에 답변을 볼 수 있음..
+
+```
+SELECT q.createDate, q.content, p.thumb, p.title, coq.createDate, coq.comment
+FROM qna q LEFT OUTER JOIN user u
+ON q.userId = u.id
+LEFT OUTER JOIN product p
+ON q.productId = p.id
+LEFT OUTER JOIN commentOnQnA coq
+ON q.id = coq.qnaId
+WHERE q.id=2;
+```
+
+//update 회원정보 수정
+POST - 회원가입 페이지 재활용
+"/shop_mypage/{userId}/update"
+
+MypageUpdateRespDto
+
+화면 불러와서 값 미리 뿌려져있어야하니까 필요한 쿼리문
+
+```
+SELECT u.profile, u.email, u.name, u.gender, u.phone, u.address, u.detail_address, u.birthday
+FROM USER u
+WHERE u.id = 3;
+```
+
+회원정보 수정 과정의 update 하는 쿼리문
+
+```
+UPDATE user
+SET profile='수정된 프로필', name='수정된 문선현', gender='여', phone='010-3333-3333', address='수정된 부산광역시', detail_address='수정된 상세주소', birthday='1993-04-21'
+WHERE id=3;
+
+```
+
+//회원탈퇴
+POST -
+"/shop_mypage/{userId}/Withdrawal"
+MypageWithdrawalResponseDto
+**\*\*\*\***\*\***\*\*\*\***어떤 값들을 받아와야하는걸까요? Dto만들어야한다면 어떤것들이 필요한걸가요
+탈퇴 쿼리 2가지
+
+1.
+
+```
+UPDATE user
+SET cancel='1'
+WHERE id =3;
+```
+
+2. 우선 이걸로 하기로함
+
+```
+DELETE FROM user
+WHERE id =3;
+```
+
+//장바구니
+Post
+"/shop_cart/{userId}
+
+CartResponseDto ##배송비는 고정
+SELECT p.id, p.title, c.quantity, p.price
+FROM cart c INNER JOIN product p INNER JOIN user u
+ON c.userId = u.id AND p.id = c.productId
+WHERE u.id = 1;
+
+--------------- 스프링 서버 안가는 페이지
+GET
+"/about"
+
+GET
+"/cscenter"
+
+````
+
 ## 관리자 dto를 위한 join
 
 # 관리자는 각 테이블들에 대한 CRUD가 기본
@@ -487,7 +873,7 @@ WHERE u.id = 1;
 #point
 
 
-```
+````
 
 ## ABOUT 페이지 발견해서 만든것들
 
@@ -522,23 +908,25 @@ values ("제목","내용");
 - ->mybatis generatedKey 검색
 
 # 내가 만든 쿼리문 꼭 한번 검사할것
+
 =======
+
 ```
 내일 mysql 및 스프링 손도 봐야함
 그리고 새로운 테이블 추가댐
 
 
 ```
+
 #새로만든 Qnarecomment 입니다
-create table  Qnarecomment(
+create table Qnarecomment(
 id int auto_increment primary key,
 qnaId int,
 qnaComment varchar(2000)
 )engine=InnoDB default charset=utf8;
 drop table Qnarecomment;
 
-#########################################3
-
+#########################################
 
 ```
 use areuareu;

@@ -2,7 +2,7 @@ package com.aruerue.shop.controller.dto;
 
 import java.sql.Timestamp;
 
-import com.aruerue.shop.controller.dto.QnARespDto.QnARespDtoBuilder;
+import com.aruerue.shop.controller.dto.qnA.QnARespDto.QnARespDtoBuilder;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
