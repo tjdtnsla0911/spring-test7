@@ -1,3 +1,325 @@
+```
+2020.09.20 새벽에 작업한거 push올려서 충돌+yml작업 바꿀빠에 복붙이 빨라서 올려놓으니 바꿔치기하거나 없는거 받아서 바로쓰세요
+
+
+addminNotice.xml
+
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.aruerue.shop.repository.AddminNoticeRepository">
+<select id="findAllNotice" resultType="com.aruerue.shop.model.Notice" >
+select * from notice;
+</select>
+
+<select id="findSelectnotice" resultType="com.aruerue.shop.model.Notice">
+select * from notice where id=#{id}
+</select>
+
+<insert id="insertNotice">
+INSERT INTO notice(title,content,createDate,readCount,thumb)
+values(#{title},#{content},now(),0,#{thumb})
+	</insert>
+
+################################################
+
+
+
+addminSelectNotice.mustache
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+{{notice}}
+</body>
+</html>
+
+############################
+
+AddminNoticeController.java
+
+package com.aruerue.shop.controller;
+
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.List;
+import java.util.UUID;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+
+import com.aruerue.shop.model.Notice;
+import com.aruerue.shop.repository.AddminNoticeRepository;
+
+@Controller
+public class AddminNoticeController {
+
+	@Value("${file.path}")
+	private String fileRealPath;
+	
+	private Notice notice;
+	
+	
+	@Autowired
+	AddminNoticeRepository addminNoticeRepository;
+	@GetMapping("/noticelist")
+	public String NoticeList(Model model) {
+		List<Notice> noticeList = addminNoticeRepository.findAllNotice();
+		System.out.println("가져온 notice들은 ?="+noticeList);
+		model.addAttribute("noticeList",noticeList);
+
+		System.out.println("addminNotice에 보내기직전");
+		return "addminNotice";
+	}
+
+	@PutMapping("/selectNotice/{id}")
+	public @ResponseBody Notice selectNotice(@PathVariable int id,Model model) {
+		System.out.println("왔음");
+		System.out.println("받은 id="+id);
+		//System.out.println("받은 id = ?"+id);
+		Notice notice = addminNoticeRepository.findSelectnotice(id);
+		return notice;
+
+	}
+	@GetMapping("/selectRealNotice/{id}")
+	public String selectRealNotice(@PathVariable int id,Model model) {
+		System.out.println("노티스에옴");
+		System.out.println("id = "+id);
+		Notice notice = addminNoticeRepository.findSelectnotice(id);
+		model.addAttribute("notice",notice);
+		return "addminSelectNotice";
+	}
+	
+	@PostMapping("/upNotice")
+	public String upNotice(@RequestParam("thumb") MultipartFile thumb,String title,String content,String nullCheck) throws IOException {
+		System.out.println("upNotice에 왔습니다");
+		Notice notice = new Notice();
+		System.out.println("thumb = "+thumb);
+		System.out.println("사진의 이름 = "+thumb.getOriginalFilename());
+		UUID uuid = UUID.randomUUID();
+		System.out.println("thumb ="+thumb);
+		System.out.println("title ="+title);
+		System.out.println("content ="+content);
+		notice.setTitle(title);
+		
+		notice.setContent(content);
+		if(nullCheck!=null||nullCheck!="null") {
+			System.out.println("널이아니다에 왔습니다");
+			String uuidThumb = uuid+ "_"+thumb.getOriginalFilename();
+			Path fileThumb = Paths.get(fileRealPath + uuidThumb);
+			System.out.println("fileThumb = "+fileThumb);
+			Files.write(fileThumb,thumb.getBytes());
+			String realthumb = "/images/"+uuidThumb;
+			System.out.println("realthumb = "+uuidThumb);
+			notice.setThumb(realthumb);
+		addminNoticeRepository.insertNotice(notice);
+	System.out.println("null이아니다 다끝남^^");
+		return "redirect:noticelist";
+		}else {
+			System.out.println("null이다에옴");
+			addminNoticeRepository.insertNotice(notice);
+			System.out.println("null이다 다끝남^^");
+			
+			return "redirect:noticelist";
+		
+		}
+		
+
+//		
+
+	
+		//return "redirect:noticelist";
+	}
+}
+
+
+#################################################################################
+AddminNoticeRepository.java
+
+package com.aruerue.shop.repository;
+
+import java.util.List;
+
+import com.aruerue.shop.model.Notice;
+
+public interface AddminNoticeRepository {
+	List<Notice> findAllNotice();
+	public Notice findSelectnotice(int id);
+	public int insertNotice(Notice notice);
+
+}
+
+######################################################################33
+addminNotice.mustache
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Bootstrap Example</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body >
+
+<div class="container">
+  <h2>Contextual Classes</h2>
+	<button type="button" data-toggle="modal" data-target="#myModal" style="WIDTH: 60pt; HEIGHT: 20pt">글쓰기</button></td>
+	
+  <table class="table">
+    <thead>
+      <tr>
+        <th>id</th>
+        <th>title</th>
+
+        <th>createDate</th>
+        <th>readCount</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#noticeList}}
+      <tr class="active">
+       <td>{{id}}</td>
+              <td><a href="#" onclick="asdf({{id}})" style="color: black; text-decoration: none;" >{{title}}</a></td>
+
+        <td>{{createDate}}</td>
+        <td>{{readCount}}</td>
+      </tr>
+        {{/noticeList}}
+    </tbody>
+  </table>
+</div>
+
+
+			
+				
+
+			<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+				<div class="modal-dialog" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+							<h4 class="modal-title" id="myModalLabel">Notice 글올리기</h4>
+						</div>
+						<div class="modal-body">
+
+
+					<br />
+				<form method="post" action="/upNotice"  enctype="multipart/form-data">
+					<input type="hidden" id="nullCheck" name="nullCheck" class="nullCheck" value="null"/><br/><br/>
+					<input type="text" id="title" name="title" class="title" placeholder="제목을 적으세요"/><br/><br/>
+					<input type="text" id="content" name="content" class="content" placeholder="제목을 적으세요"/><br/><br/>
+					<input type="file" id="thumb" name="thumb" class="thumb"/><br /><br/>
+						
+						<div class="img_wrap">
+					<img id="test" class="test" src="" style="height: 200px"										width="200px" />
+						</div>
+						</div>
+						<div class="modal-footer">
+						
+							<input type="submit" value="글올리기">
+							</form>
+							<button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
+						</div>
+					</div>
+				</div>
+			</div>
+
+	
+
+
+
+</body>
+<script>
+
+var sel_file;
+$(document).ready(function() {
+	$(".thumb").on("change", handleImgFileSelect);
+});
+console.log('file의 값 = ',$(".thumb").val());
+function handleImgFileSelect(e) {
+	var files = e.target.files;
+	var filesArr = Array.prototype.slice.call(files);
+	filesArr.forEach(function(f) {
+		if (!f.type.match("image.*")) {
+			alert("확장자는 이미지 확장자만 가능합니다.");
+			return;
+		}
+		sel_file = f;
+		var reader = new FileReader();
+		reader.onload = function(e) {
+			$(".test").attr("src", e.target.result);
+			$("#nullCheck").attr("value", "널아니다 ㅅㅂ");
+		}
+		reader.readAsDataURL(f);
+	});
+}
+</script>
+
+
+
+<script type="text/javascript">
+function asdf(id){
+	console.log(id);
+	$.ajax({
+		type: "PUT",
+		url: "/selectNotice/"+id,
+		data: id, // http body데이터
+		contentType: "application/json; charset=utf-8",
+	       // enctype: 'multipart/form-data',// body데이터가 어떤 타입인지(MIME)
+		dataType: "JSON" // 요청을 서버로해서 응답이 왔을 때 기본적으로 모든 것이 문자열 (생긴게
+							// json이라면) => javascript오브젝트로 변경
+	}).done(function(resp){
+
+		console.log(resp);
+		console.log('resp.id=',resp.id);
+		alert('성공');
+        location.href = '/selectRealNotice/'+resp.id;
+	
+
+	}).fail(function(error){
+		alert(JSON.stringify(error));
+	});
+}
+</script>
+</html>
+
+#############################################################
+
+
+
+```
+
+
+
+
+
+
+
+
+
 # Spring Boot 의존성
 
 - mybatis
