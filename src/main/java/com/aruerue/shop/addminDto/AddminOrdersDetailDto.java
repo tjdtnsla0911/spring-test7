@@ -1,5 +1,6 @@
 package com.aruerue.shop.addminDto;
 
+import java.sql.Date;
 import java.sql.Timestamp;
 
 import lombok.AllArgsConstructor;
@@ -14,7 +15,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class AddminOrdersDetailDto {
 private int id;
-private Timestamp orderDate;
+private Date orderDate;
 private int totalPrice;
 private String howToPay;
 private int price;
@@ -25,4 +26,8 @@ private String name;
 private String address;
 private String detail_address;
 private int quantity;
+private String type;
+
+///여긴 categoryId 체인지하는곳
+
 }

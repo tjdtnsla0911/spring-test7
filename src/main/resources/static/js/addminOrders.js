@@ -117,50 +117,23 @@ this.ViewDetails(e);
 						" <tr class=\"warning\">\r\n" +
 						"\r\n" +
 						"        <td>"+data.id+"</td>\r\n" +
+						"        <td>"+data.orderDate+"</td>\r\n" +
+						"        <td>"+data.type+"</td>\r\n" +
+						"        <td>"+data.howToPay+"</td>\r\n" +
 						"        <td>"+data.price+"</td>\r\n" +
-						"        <td>"+data.price+"</td>\r\n" +
-						"        <td>{{totalPrice}}</td>\r\n" +
-						"        <td>{{username}}</td>\r\n" +
-						"        <td>{{createDate}}</td>\r\n" +
-						"        <td>{{address}}</td>\r\n" +
-						"        <td>{{detail_address}}</td>\r\n" +
-						"        <td>{{howToPay}}</td>\r\n" +
+						"        <td>"+data.stats+"</td>\r\n" +
+						"        <td>"+data.fee+"</td>\r\n" +
+						"        <td>"+data.title+"</td>\r\n" +
+						"        <td>"+data.address+"</td>\r\n" +
+						"        <td>"+data.detail_address+"</td>\r\n" +
+						"        <td>"+data.quantity+"</td>\r\n" +
 						"		<td>\r\n" +
-						"	<input type=\"hidden\" id=\"id{{id}}\" value=\"{{id}}\">\r\n" +
-						"							style=\"WIDTH: 60pt; HEIGHT: 20pt\">ㄹㅇ상세보기</button> <br />\r\n" +
 						"\r\n" +
 						"\r\n" +
 						"\r\n" +
 						"\r\n" +
 						"\r\n" +
-						"		<button type=\"button\" data-toggle=\"modal\"\r\n" +
-						"							data-target=\"#myModal{{id}}\" style=\"WIDTH: 60pt; HEIGHT: 20pt\">상세보기</button>\r\n" +
 						"<br/>\r\n" +
-						"<form >\r\n" +
-						"						<div class=\"modal fade\" id=\"myModal{{id}}\" tabindex=\"-1\"\r\n" +
-						"							role=\"dialog\" aria-labelledby=\"myModalLabel\">\r\n" +
-						"							<div class=\"modal-dialog\" role=\"document\">\r\n" +
-						"								<div class=\"modal-content\">\r\n" +
-						"									<div class=\"modal-header\">\r\n" +
-						"										<button type=\"button\" class=\"close\" data-dismiss=\"modal\"\r\n" +
-						"											aria-label=\"Close\">\r\n" +
-						"											<span aria-hidden=\"true\">&times;</span>\r\n" +
-						"										</button>\r\n" +
-						"										<h4 class=\"modal-title\" id=\"myModalLabel\">회원 정보 수정을 합시다~</h4>\r\n" +
-						"									</div>\r\n" +
-						"									<div class=\"modal-body\">\r\n" +
-						"\r\n" +
-						"									</div>\r\n" +
-						"									<div class=\"modal-footer\">\r\n" +
-						"										<input class=\"btn-update\" type=\"button\" id=\"bt-update-{{id}}\"\r\n" +
-						"											style=\"WIDTH: 60pt; HEIGHT: 20pt\" value=\"수정하기\"/>\r\n" +
-						"										<button type=\"button\" class=\"btn btn-default\"\r\n" +
-						"											data-dismiss=\"modal\">닫기</button>\r\n" +
-						"									</div>\r\n" +
-						"								</div>\r\n" +
-						"							</div>\r\n" +
-						"						</div>\r\n" +
-						"						</form>\r\n" +
 						"\r\n" +
 						"		</td>\r\n" +
 						"\r\n" +
