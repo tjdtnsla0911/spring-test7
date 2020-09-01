@@ -23,6 +23,7 @@ private String radioAd;
 private String radioParentTypeId; //카테고리아이디 겸용
 private String radioBest;
 private String radioNew;
+
 ///////////추가되놈들///////
 private int productid;
 private int parentProductId;
@@ -30,13 +31,7 @@ private int relateProductId;
 private boolean sale;
 private boolean newly;
 private boolean best;
-
-
 /////////////////////////boolean 교체문
-
-
-
-
 //html + ajax에서 boolean형으로 true 적어서 문자형으로 자꾸인식해서
 //위에서 String 형으로 한번받고 if으로 다시 boolean으로 하는 방식 택했습니다.
 

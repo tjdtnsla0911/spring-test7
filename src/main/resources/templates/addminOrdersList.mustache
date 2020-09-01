@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Bootstrap Example</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+</head>
+<body>
+
+<div class="container">
+  <h2>관리자 오더 페이지</h2>
+
+  <hr/>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>id</th>
+        <th>userid</th>
+        <th>orderDate</th>
+        <th>totalPrice</th>
+        <th>username</th>
+        <th>createDate</th>
+        <th>address</th>
+        <th>detaill_address</th>
+        <th>howToPay</th>
+        <th>기능</th>
+      </tr>
+    </thead>
+    <tbody>
+    {{#orderList}}
+
+      <tr class="warning">
+
+        <td>{{id}}</td>
+        <td>{{userId}}</td>
+        <td>{{orderDate}}</td>
+        <td>{{totalPrice}}</td>
+        <td>{{username}}</td>
+        <td>{{createDate}}</td>
+        <td>{{address}}</td>
+        <td>{{detail_address}}</td>
+        <td>{{howToPay}}</td>
+		<td>
+	<input type="hidden" id="id{{id}}" value="{{id}}">
+	<input type="hidden" id="userId{{id}}" value="{{userId}}">
+	<input type="hidden" id="orderDate{{id}}" value="{{orderDate}}">
+	<input type="hidden" id="totalPrice{{id}}" value="{{totalPrice}}">
+	<input type="hidden" id="username{{id}}" value="{{username}}">
+	<input type="hidden" id="createDate{{id}}" value="{{createDate}}">
+	<input type="hidden" id="address{{id}}" value="{{address}}">
+	<input type="hidden" id="detail_address{{id}}" value="{{detail_address}}">
+	<input type="hidden" id="howToPay{{id}}" value="{{howToPay}}">
+	<button class="btn-ViewDetails" id="bt-ViewDetails-{{id}}"
+							style="WIDTH: 60pt; HEIGHT: 20pt">ㄹㅇ상세보기</button> <br />
+
+
+
+
+
+		<button type="button" data-toggle="modal"
+							data-target="#myModal{{id}}" style="WIDTH: 60pt; HEIGHT: 20pt">상세보기</button>
+<br/>
+<form >
+						<div class="modal fade" id="myModal{{id}}" tabindex="-1"
+							role="dialog" aria-labelledby="myModalLabel">
+							<div class="modal-dialog" role="document">
+								<div class="modal-content">
+									<div class="modal-header">
+										<button type="button" class="close" data-dismiss="modal"
+											aria-label="Close">
+											<span aria-hidden="true">&times;</span>
+										</button>
+										<h4 class="modal-title" id="myModalLabel">회원 정보 수정을 합시다~</h4>
+									</div>
+									<div class="modal-body">
+
+									</div>
+									<div class="modal-footer">
+										<input class="btn-update" type="button" id="bt-update-{{id}}"
+											style="WIDTH: 60pt; HEIGHT: 20pt" value="수정하기"/>
+										<button type="button" class="btn btn-default"
+											data-dismiss="modal">닫기</button>
+									</div>
+								</div>
+							</div>
+						</div>
+						</form>
+
+		</td>
+
+      </tr>
+
+      </div>
+ {{/orderList}}
+
+
+    </tbody>
+
+  </table>
+
+   <div >
+<hr/>
+<table class="table">
+    <thead>
+      <tr>
+        <th>id</th>
+        <th>userid</th>
+        <th>orderDate</th>
+        <th>totalPrice</th>
+        <th>username</th>
+        <th>createDate</th>
+        <th>address</th>
+        <th>detaill_address</th>
+        <th>howToPay</th>
+        <th>기능</th>
+      </tr>
+    </thead>
+    <tbody id="detail">
+
+
+    </tbody>
+  </table>
+   </div>
+  <input type="text" id="ajaxtest" value="ajax테스트">
+</div>
+<script src="/js/addminOrders.js"></script>
+<script type="text/javascript">
+
+</script>
+</body>
+</html>
+

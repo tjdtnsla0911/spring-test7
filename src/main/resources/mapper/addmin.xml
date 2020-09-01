@@ -8,7 +8,7 @@
 INSERT INTO product(title,thumb,price,disc,ad,discounted,content,categoryId,bgImg)
 values(#{title},#{thumb},#{price},#{disc},#{radioAd2},#{discounted},#{content},#{radioParentTypeId},#{bgImg})
 	</insert>
-<insert id="saveProduct_status">
+<insert id="saveProduct_status" >
 INSERT INTO product_status (sale,newly,best)
 values(#{radioSale2},#{radioNew2},#{radioBest2})
 </insert>
