@@ -4,9 +4,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
-<body>
-<h1>도착잘했습니당</h1>
-</body>
+
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
@@ -25,9 +23,12 @@ body {
 </head>
 <body>
 <button onclick="replay()">새로고침</button><button onclick="related()">관련상품</button><button onclick="back()">상품등록</button>	<button onclick="goUserList()">유저페이지</button>
-<button onclick="QnaList()">QnaList</button>
+<button onclick="QnaList()">QnaList</button><button onclick="order()">상품관리</button>
 
 <script>
+function order(){
+	location.href="/orders";
+}
 function QnaList(){
 	location.href="/addqna";
 }

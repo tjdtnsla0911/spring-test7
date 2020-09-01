@@ -15,6 +15,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class AddminOrdersDetailDto {
 private int id;
+private int orders_detailId;
 private Date orderDate;
 private int totalPrice;
 private String howToPay;
@@ -27,6 +28,7 @@ private String address;
 private String detail_address;
 private int quantity;
 private String type;
+
 
 ///여긴 categoryId 체인지하는곳
 

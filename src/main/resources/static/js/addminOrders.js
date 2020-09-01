@@ -50,7 +50,7 @@ let index = {
 			});
 			$(".btn-update").on("click", (e)=>{ // function(){} , ()=>{} this를
 												// 바인딩하기 위해서!!
-
+				console.log('안왔음');
 				this.update(e);
 			});
 			$(".btn-delete").on("click", (e)=>{ // function(){} , ()=>{} this를
@@ -66,97 +66,6 @@ this.ViewDetails(e);
 });
 
 		},
-
-		ViewDetails: function(e){
-
-			console.log('e =',e);
-			let temp = (e.target.id).replace("bt-ViewDetails-","");
-
-			let data2 = {
-					id: temp
-			};
-			console.log('data2 = ',data2);
-
-			let data = {
-					id:$("#id"+data2.id).val(),
-					userId:$("#id"+data2.id).val(),
-					orderDate:$("#orderDate"+data2.id).val(),
-					totalPrice:$("#totalPrice"+data2.id).val(),
-					username:$("#username"+data2.id).val(),
-					createDate:$("#createDate"+data2.id).val(),
-					address:$("#address"+data2.id).val(),
-					detail_address:$("#detail_address"+data2.id).val(),
-					howToPay:$("#howToPay"+data2.id).val(),
-
-			};
-			console.log('data = ',data);
-
-
-
-			// console.log(data);
-
-			// ajax호출시 default가 비동기 호출
-			// ajax 통신을 이용해서 3개의 데이터를 json으로 변경하여 insert 요청!!
-			// ajax가 통신을 성공하고 서버가 json을 리턴해주면 자동으로 자바 오브젝트로 변환해주네요.
-			$.ajax({
-				type: "PUT",
-				url: "/ordersDetail/"+data2.id,
-				data: JSON.stringify(data2), // http body데이터
-				contentType: "application/json; charset=utf-8",
-			       // enctype: 'multipart/form-data',// body데이터가 어떤 타입인지(MIME)
-				dataType: "JSON" // 요청을 서버로해서 응답이 왔을 때 기본적으로 모든 것이 문자열 (생긴게
-									// json이라면) => javascript오브젝트로 변경
-			}).done(function(resp){
-				console.log(resp);
-
-				$("#detail").empty(); //여기서 지우고
-
-				for(var data of resp){ //for(var data(변수명) if resp(성공한거의 끝까지나오게해라))
-
-					var input_html =
-						" <tr class=\"warning\">\r\n" +
-						"\r\n" +
-						"        <td>"+data.id+"</td>\r\n" +
-						"        <td>"+data.orderDate+"</td>\r\n" +
-						"        <td>"+data.type+"</td>\r\n" +
-						"        <td>"+data.howToPay+"</td>\r\n" +
-						"        <td>"+data.price+"</td>\r\n" +
-						"        <td>"+data.stats+"</td>\r\n" +
-						"        <td>"+data.fee+"</td>\r\n" +
-						"        <td>"+data.title+"</td>\r\n" +
-						"        <td>"+data.address+"</td>\r\n" +
-						"        <td>"+data.detail_address+"</td>\r\n" +
-						"        <td>"+data.quantity+"</td>\r\n" +
-						"		<td>\r\n" +
-						"\r\n" +
-						"\r\n" +
-						"\r\n" +
-						"\r\n" +
-						"\r\n" +
-						"<br/>\r\n" +
-						"\r\n" +
-						"		</td>\r\n" +
-						"\r\n" +
-						"      </tr>\r\n" +
-						"\r\n" +
-						"      </div>";
-
-					$("#detail").append(input_html);
-
-//				$('#ajaxtest').val(resp[0].totalPrice);
-				}
-
-
-
-			}).fail(function(error){
-				alert(JSON.stringify(error));
-			});
-
-		},
-
-
-
-
 
 
 
@@ -221,57 +130,8 @@ this.ViewDetails(e);
 
 		},
 
-		update: function(e){
-
-			console.log('e =',e);
-			let temp = (e.target.id).replace("bt-update-","");
-
-			let data2 = {
-					id: temp
-			};
-			console.log('data2 = ',data2);
-
-			var formData = new FormData();
-			formData.append('id', $("#id"+data2.id).val());
-			formData.append('title', $("#modaltitle"+data2.id).val());
-			formData.append('thumb', $("#modalthumb"+data2.id).val());
-			formData.append('price',  $("#modalprice"+data2.id).val());
-			formData.append('disc', $("#modaldisc"+data2.id).val());
-			formData.append('discounted', $("#modaldiscounted"+data2.id).val());
-			formData.append('content', $("#modalcontent"+data2.id).val());
-			formData.append('bgImg', $("#fuck"+data2.id).val());
-			formData.append('file', $("#file"+data2.id)[0].files[0]);
-			formData.append('file2', $("#file2"+data2.id)[0].files[0]);
 
 
-//
-//if($("#file"+data2.id)[0].files[0]==undefined){
-//
-//}
-console.log('file1 = '+formData.thumb);
-console.log('file1 = '+formData.bgImg);
-
-
-//console.log('file = '+$("#file2"+data2.id)[0].files[0]);
-//console.log('formData = '+$("#fuck"+data2.id).val());
-			$.ajax({
-			type: "PUT",
-			url: "/change/"+data2.id,
-			contentType: 'multipart/form-data',
-			data: formData, // http body데이터
-			 processData: false,
-			 contentType: false,
-		// ssunsband.tistory.com/entry/Jquery-Ajax를-이용한-파일-업로드FormData-사용
-		// [ssunsband] // 요청을 서버로해서 응답이 왔을 때 기본적으로 모든 것이 문자열 (생긴게 json이라면) =>
-		// javascript오브젝트로 변경
-			}).done(function(resp){
-				alert("물품변경이 완료되었습니다.");
-				// console.log(resp);
-				// location.href = "/list";
-			}).fail(function(error){
-				alert(JSON.stringify(error));
-			});
-		},
 
 
 
@@ -335,41 +195,192 @@ console.log('file1 = '+formData.bgImg);
 				alert(JSON.stringify(error));
 			});
 
+
+
+		},
+
+		update: function(){
+			console.log(event.target);
+//			console.log('update에왔음');
+//			console.log('e =',e);
+//			let temp = (e.target.id).replace("bt-update-","");
+//
+//			$("#bt-update-1").
+
+			let data2 = {
+					id: temp
+			};
+			console.log('ajax안의 또다른 ajax의 id =',data2.id);
+
+			$.ajax({
+			type: "PUT",
+			url: "/changeadsfasdf/"+data2.id,
+			contentType: 'multipart/form-data',
+			data: formData, // http body데이터
+			 processData: false,
+			 contentType: false,
+			}).done(function(resp){
+				alert("물품변경이 완료되었습니다.");
+				// console.log(resp);
+				// location.href = "/list";
+			}).fail(function(error){
+				alert(JSON.stringify(error));
+			});
+		},
+
+		ViewDetails: function(e){
+
+			console.log('e =',e);
+			let temp = (e.target.id).replace("bt-ViewDetails-","");
+
+			let data2 = {
+					id: temp
+			};
+			console.log('data2 = ',data2);
+
+			let data = {
+					id:$("#id"+data2.id).val(),
+					userId:$("#id"+data2.id).val(),
+					orderDate:$("#orderDate"+data2.id).val(),
+					totalPrice:$("#totalPrice"+data2.id).val(),
+					username:$("#username"+data2.id).val(),
+					createDate:$("#createDate"+data2.id).val(),
+					address:$("#address"+data2.id).val(),
+					detail_address:$("#detail_address"+data2.id).val(),
+					howToPay:$("#howToPay"+data2.id).val(),
+
+			};
+			console.log('data = ',data);
+
+
+
+			// console.log(data);
+
+			// ajax호출시 default가 비동기 호출
+			// ajax 통신을 이용해서 3개의 데이터를 json으로 변경하여 insert 요청!!
+			// ajax가 통신을 성공하고 서버가 json을 리턴해주면 자동으로 자바 오브젝트로 변환해주네요.
+			$.ajax({
+				type: "PUT",
+				url: "/ordersDetail/"+data2.id,
+				data: JSON.stringify(data2), // http body데이터
+				contentType: "application/json; charset=utf-8",
+			       // enctype: 'multipart/form-data',// body데이터가 어떤 타입인지(MIME)
+				dataType: "JSON" // 요청을 서버로해서 응답이 왔을 때 기본적으로 모든 것이 문자열 (생긴게
+									// json이라면) => javascript오브젝트로 변경
+			}).done(function(resp){
+				console.log(resp);
+
+				$("#detail").empty(); //여기서 지우고
+
+				for(var data of resp){ //for(var data(변수명) if resp(성공한거의 끝까지나오게해라))
+
+					var input_html =
+						" <tr class=\"warning\">\r\n" +
+						"\r\n" +
+						"        <td>"+data.id+"</td>\r\n" +
+						"        <td>"+data.orderDate+"</td>\r\n" +
+						"        <td>"+data.type+"</td>\r\n" +
+						"        <td>"+data.howToPay+"</td>\r\n" +
+						"        <td>"+data.price+"</td>\r\n" +
+						"        <td>"+data.stats+"</td>\r\n" +
+						"        <td>"+data.fee+"</td>\r\n" +
+						"        <td>"+data.title+"</td>\r\n" +
+						"        <td>"+data.address+"</td>\r\n" +
+						"        <td>"+data.detail_address+"</td>\r\n" +
+						"        <td>"+data.quantity+"</td>\r\n" +
+						"        <td>"+data.orders_detailId+"</td>\r\n" +
+						"		<td>\r\n" +
+
+						"				<button type=\"button\" data-toggle=\"modal\" data-target=\"#myModal"+data.orders_detailId+"\" style=\"WIDTH: 60pt; HEIGHT: 20pt\">상세보기</button> <br />\r\n" +
+						"						<form>\r\n" +
+						"							<div class=\"modal fade\" id=\"myModal"+data.orders_detailId+"\" class=\"myModal\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"myModalLabel\">\r\n" +
+						"								<div class=\"modal-dialog\" role=\"document\">\r\n" +
+						"									<div class=\"modal-content\">\r\n" +
+						"										<div class=\"modal-header\">\r\n" +
+						"											<button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\">\r\n" +
+						"												<span aria-hidden=\"true\">&times;</span>\r\n" +
+						"											</button>\r\n" +
+						"											<h4 class=\"modal-title\" id=\"myModalLabel\">회원 정보 수정을 합시다~</h4>\r\n" +
+						"											상태변경 : <input type=\"text\" id=\"stats"+data.orders_detailId+"\" name=\"stats\" value=\""+data.stats+"\">\r\n" +
+						"\r\n" +
+						"\r\n" +
+						"										</div>\r\n" +
+						"										<div class=\"modal-body\"></div>\r\n" +
+						"										<div class=\"modal-footer\">\r\n" +
+						"											<input class=\"btn-update\" type=\"button\" id=\"bt-update-"+data.orders_detailId+"\" style=\"WIDTH: 60pt; HEIGHT: 20pt\" value=\"수정하기\" />\r\n" +
+						"											<button type=\"button\" class=\"btn btn-default\" data-dismiss=\"modal\">닫기</button>\r\n" +
+						"										</div>\r\n" +
+						"									</div>\r\n" +
+						"								</div>\r\n" +
+						"							</div>\r\n" +
+						"						</form>"
+						"</td>"+
+						"\r\n" +
+						"\r\n" +
+						"\r\n" +
+						"\r\n" +
+						"\r\n" +
+						"<br/>\r\n" +
+						"\r\n" +
+						"		</td>\r\n" +
+						"\r\n" +
+						"      </tr>\r\n" +
+						"\r\n" +
+						"      </div>";
+
+					console.log(input_html);
+					$("#detail").append(input_html);
+
+
+//				$('#ajaxtest').val(resp[0].totalPrice);
+
+				}
+
+				$(".btn-update").on("click", (e)=>{
+					console.log('e =',e)
+				console.log('왔음');
+				test1(e);
+				});
+
+
+			}).fail(function(error){
+				alert(JSON.stringify(error));
+			});
+
 		},
 }
 
-function encodeImageFileAsURL(e) {
-	var file = $('#file'+e).prop('files')[0];
-	console.log('file = ',file);
-
-console.log('e = ',e)
-
-	var reader = new FileReader();
-	reader.onloadend = function() {
-		console.log('RESULT', reader.result);
-		$('#fuck'+e).attr('value', reader.result);
-		$('#test'+e).attr('src', reader.result);
+function test1(e){
+	console.log(e);
+	let temp = (e.target.id).replace("bt-update-","");//"bt-update-"+data.orders_detailId+"
+	let data = {
+			id: temp
 	};
-
-	reader.readAsDataURL(file);
+console.log("받아온 id값 = ",data.id)
+let data2={
+	stats : $("#stats"+data.id).val(),
+	orders_detailId : data.id,
 }
+console.log("data2= ",data2);
 
-function encodeImageFileAsURL2(e) {
-	var file = $('#file2'+e).prop('files')[0];
-	console.log('file = ',file);
+$.ajax({
+	type: "PUT",
+	url: "/chaneStats/"+data.id,
+	data: JSON.stringify(data2), // http body데이터
+	contentType: "application/json; charset=utf-8",// body데이터가 어떤
+	dataType: "text" // 요청을 서버로해서 응답이 왔을 때 기본적으로 모든 것이 문자열 (생긴게
+						// json이라면) => javascript오브젝트로 변경
+}).done(function(resp){
 
-console.log('e = ',e)
+	console.log(resp);
+	location.href="/orders"
 
-	var reader = new FileReader();
-	reader.onloadend = function() {
-		console.log('RESULT', reader.result);
-		$('#fuck'+e).attr('value', reader.result);
-		$('#test2'+e).attr('src', reader.result);
-	};
+}).fail(function(error){
+	alert(JSON.stringify(error));
+});
 
-	reader.readAsDataURL(file);
+
 }
-
 
 
 

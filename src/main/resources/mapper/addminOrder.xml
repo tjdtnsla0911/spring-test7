@@ -19,9 +19,13 @@ on o.id = od.orderid  and o.userid = us.id and od.productId = pro.id
 </select>
 
 <select id="findAllOrderDetailList2" resultType="com.aruerue.shop.addminDto.AddminOrdersDetailDto">
-select o.id,o.orderDate,o.howToPay,od.price,od.stats,od.fee,pro.title,us.name,us.address,us.detail_address,od.quantity,c.type
+select o.id,o.orderDate,o.howToPay,od.price,od.stats,od.fee,pro.title,us.name,us.address,us.detail_address,od.quantity,c.type,od.id as "orders_detailId"
 from orders o inner join orders_detail od inner join user us inner join product pro inner join category c
-on o.id = od.orderid  and o.userid = us.id and od.productId = pro.id and pro.categoryId = c.id where o.id=#{id}
-
+on o.id = od.orderid  and o.userid = us.id and od.productId = pro.id and pro.categoryId = c.id and o.id=#{id};
 </select>
+
+
+<update id="updateOrders">
+update orders_detail set stats = #{stats} where id=#{orders_detailId}
+</update>
 </mapper>

@@ -36,6 +36,7 @@ public class AddminOrdersController {
 		System.out.println("addminOrdersDto 찾아온값 = "+addminOrdersDto);
 		model.addAttribute("orderList",addminOrdersDto);
 		model.addAttribute("orderDetailList",addminOrdersDto2);
+		System.out.println("addminOrdersDto = "+addminOrdersDto);
 		return "addminOrdersList";
 	}
 
@@ -48,5 +49,20 @@ public class AddminOrdersController {
 	//	System.out.println(addminOrdersRepository.findAllOrderDetailList2(id));
 		return add;
 	}
+
+	@PutMapping("/chaneStats/{id}")
+	public @ResponseBody String chaneStats(@PathVariable int id ,@RequestBody AddminOrdersDetailDto addminOrdersDetailDto) {
+		System.out.println("일단왔고");
+		System.out.println("id ="+id);
+		System.out.println("addminOrdersDetailDto ="+addminOrdersDetailDto);
+		System.out.println("이놈이아이디인가 ? ="+addminOrdersDetailDto.getOrders_detailId());
+		System.out.println(addminOrdersDetailDto.getStats());//일단받았고
+		addminOrdersRepository.updateOrders(addminOrdersDetailDto);
+		System.out.println("일단끝낫듯");
+		return "null";
+
+	}
+
+
 }
 

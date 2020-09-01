@@ -10,6 +10,30 @@
 
 </head>
 <body>
+<button onclick="replay()">전체상품</button><button onclick="related()">관련상품</button><button onclick="back()">상품등록</button>	<button onclick="goUserList()">유저페이지</button>
+<button onclick="QnaList()">QnaList</button><button onclick="order()">새로고침</button>
+
+<script>
+function order(){
+	location.href="/orders";
+}
+function QnaList(){
+	location.href="/addqna";
+}
+function goUserList(){
+	location.href="/userlist";
+}
+function back(){
+	location.href="/axios";
+}
+function related(){
+location.href="/relatedProducts";
+}
+function replay(){
+	location.href="/list";
+}
+</script>
+
 
 	<div class="container">
 		<h2>관리자 오더 페이지</h2>
@@ -48,8 +72,46 @@
 						type="hidden" id="orderDate{{id}}" value="{{orderDate}}"> <input type="hidden" id="totalPrice{{id}}" value="{{totalPrice}}"> <input
 						type="hidden" id="username{{id}}" value="{{username}}"> <input type="hidden" id="createDate{{id}}" value="{{createDate}}"> <input
 						type="hidden" id="address{{id}}" value="{{address}}"> <input type="hidden" id="detail_address{{id}}" value="{{detail_address}}">
-						<input type="hidden" id="howToPay{{id}}" value="{{howToPay}}">
+						<input type="hidden" id="howToPay{{id}}" class="howTopay" value="{{howToPay}}">
+
+
 						<button class="btn-ViewDetails" id="bt-ViewDetails-{{id}}" style="WIDTH: 60pt; HEIGHT: 20pt">상세보기</button> <br />
+<!--
+
+						<button type="button" data-toggle="modal" data-target="#myModal" style="WIDTH: 60pt; HEIGHT: 20pt">상세보기</button> <br />
+						<form>
+							<div class="modal fade" id="myModal" class="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+								<div class="modal-dialog" role="document">
+									<div class="modal-content">
+										<div class="modal-header">
+											<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+												<span aria-hidden="true">&times;</span>
+											</button>
+
+											<h4 class="modal-title" id="myModalLabel">회원 정보 수정을 합시다~</h4>
+
+
+						<input type="text" id="asd" value="sdf">
+											<button onclick="asdfff()">바껴랏!</button>
+					<script>
+					function asdfff(){
+						console.log();
+					}
+					</script>
+
+										</div>
+										<div class="modal-body"></div>
+										<div class="modal-footer">
+											<input class="btn-update" type="button" id="bt-update-{{id}}" style="WIDTH: 60pt; HEIGHT: 20pt" value="수정하기" />
+											<button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
+										</div>
+																				<input type="text" id="asdf" class=".asdf" value="sdf">
+						</div>
+								</div>
+							</div>
+
+						</form>
+-->
 						</td>
 
 				</tr>
@@ -77,7 +139,9 @@
 						<th>상품명</th>
 						<th>주소</th>
 						<th>상세주소</th>
-						<th>개수</th>
+					<th>개수</th>
+						<th>디테일id</th>
+
 					</tr>
 				</thead>
 				<tbody id="detail">
@@ -87,10 +151,10 @@
 			</table>
 		</div>
 	</div>
-	<script src="/js/addminOrders.js"></script>
-	<script type="text/javascript">
 
-	</script>
+
+	<script src="/js/addminOrders.js"></script>
+	<script type="text/javascript"></script>
 </body>
 </html>
 

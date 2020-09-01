@@ -9,5 +9,6 @@ public interface AddminOrdersRepository {
 	List<AddminOrdersDto> findAllOrderList();
 	List<AddminOrdersDetailDto> findAllOrderDetailList();
 	List<AddminOrdersDetailDto> findAllOrderDetailList2(int id);
+	public void updateOrders(AddminOrdersDetailDto add);
 
 }
