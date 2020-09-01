@@ -24,7 +24,7 @@ SELECT * FROM recomment WHERE id = #{id}
 SELECT * FROM notice WHERE id = #{id}
 </select>
 
-<select id="getQ"  resultType="com.aruerue.shop.model.Qna">
+<select id="getQ"  resultType="com.aruerue.shop.model.qnA.Qna">
 SELECT * FROM qna WHERE id = #{id}
 </select>
 

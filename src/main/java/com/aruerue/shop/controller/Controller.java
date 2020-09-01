@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.aruerue.shop.controller.dto.CartRespDto;
-import com.aruerue.shop.controller.dto.QnARespDto;
 import com.aruerue.shop.controller.dto.ShopRespDto;
 import com.aruerue.shop.controller.dto.detail.DetailProductRespDto;
 import com.aruerue.shop.controller.dto.detail.DetailQnARespDto;
@@ -22,6 +21,8 @@ import com.aruerue.shop.controller.dto.home.HomeProductRespDto;
 import com.aruerue.shop.controller.dto.home.HomeReviewRespDto;
 import com.aruerue.shop.controller.dto.notice.NoticeDetailsRespDto;
 import com.aruerue.shop.controller.dto.notice.NoticeRespDto;
+import com.aruerue.shop.controller.dto.qnA.CommentOnQnARespDto;
+import com.aruerue.shop.controller.dto.qnA.QnARespDto;
 import com.aruerue.shop.controller.dto.responseDto.DetailResponseDto;
 import com.aruerue.shop.controller.dto.responseDto.HomeResponseDto;
 import com.aruerue.shop.controller.dto.review.ReviewDetailRespDto;
@@ -61,7 +62,7 @@ public class Controller {
 	public DetailResponseDto shop_view(@PathVariable int id) {
 		DetailProductRespDto detailProductRespDto = repository.findProductById(id);
 		List<DetailReviewRespDto> detailReviewRespDto = repository.findReviewsById(id);
-		List<DetailQnARespDto> detailQnARespDto = repository.findQnAById(id);
+		List<DetailQnARespDto> detailQnARespDto = repository.findQnAByIdForDetail(id);
 		List<DetailRelatedRespDto> detailRelatedRespDto = repository.findRelatedProductsById(id);
 		
 		DetailResponseDto detailResponseDto = DetailResponseDto.builder()
@@ -101,6 +102,12 @@ public class Controller {
 	public List<QnARespDto> qna() {
 		List<QnARespDto> qnARespDto = repository.findQnAs();
 		return qnARespDto;
+	}
+	
+	@GetMapping("/qna_detail/{id}")
+	public CommentOnQnARespDto qnaDetail(@PathVariable int id) {
+		CommentOnQnARespDto mypageQnaDetailRespDto = repository.findQnADetailById(id);
+		return mypageQnaDetailRespDto;
 	}
 	
 	@GetMapping("/shop_cart/{userId}")

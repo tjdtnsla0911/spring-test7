@@ -1,10 +1,10 @@
 package com.aruerue.shop.repository;
 
 import com.aruerue.shop.model.Notice;
-import com.aruerue.shop.model.Qna;
 import com.aruerue.shop.model.product.Category;
 import com.aruerue.shop.model.product.Product;
 import com.aruerue.shop.model.product.RelatedProduct;
+import com.aruerue.shop.model.qnA.Qna;
 import com.aruerue.shop.model.review.Recomment;
 import com.aruerue.shop.model.review.Review;
 import com.aruerue.shop.model.user.Cart;

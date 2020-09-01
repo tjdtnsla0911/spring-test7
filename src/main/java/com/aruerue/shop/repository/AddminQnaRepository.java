@@ -3,7 +3,7 @@ package com.aruerue.shop.repository;
 import java.util.List;
 
 import com.aruerue.shop.addminDto.AddminQnaDto;
-import com.aruerue.shop.model.Qna;
+import com.aruerue.shop.model.qnA.Qna;
 
 public interface AddminQnaRepository {
 	List<AddminQnaDto> qnaList();

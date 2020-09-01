@@ -1,4 +1,4 @@
-package com.aruerue.shop.controller.dto;
+package com.aruerue.shop.controller.dto.qnA;
 
 import java.sql.Timestamp;
 
