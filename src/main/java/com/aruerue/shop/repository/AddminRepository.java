@@ -14,7 +14,8 @@ public interface AddminRepository {
 	List<AddminDto> addminDtoList();
 	public int saveProduct(AddminDto addminDto);
 	public void saveRelated_product(AddminDto addminDto);
-	public void saveProduct_status(AddminDto addminDto);
+	public void saveCategory(AddminDto addminDto);
+	//public void saveProduct_status(AddminDto addminDto);
 
 	public AddminDto selectProduct(AddminDto addminDto);
 	///////////////////////////////////////////////////////////////
@@ -29,4 +30,6 @@ public interface AddminRepository {
 	public Product selectUpdate(Product product);
 	public void updata(Product product);
 
+
+	//////////여기부턴 orders////////////////////
 }

@@ -190,7 +190,6 @@ public class AddminProductController {
 		} else {
 			addminDto.setRadioNew2(false);
 		}
-
 		if (addminDto.getRadioSale().equals("true")) {
 			addminDto.setRadioSale2(true);
 		} else {
@@ -201,6 +200,7 @@ public class AddminProductController {
 		} else {
 			addminDto.setRadioBest2(false);
 		}
+
 
 		// values(#{title},#{thumb},#{price},#{disc},#{radioAd2},#{discounted},#{content},#{radioParentTypeId},#{bgImg})
 		System.out.println("다하고 나서 title = " + addminDto.getTitle());

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.aruerue.shop.repository.AddminOrdersRepository">
+
+<select id="findAllOrderList"  resultType="com.aruerue.shop.addminDto.AddminOrdersDto">
+
+select o.id,o.userid,o.orderDate,o.totalPrice,us.username,us.createDate,us.address,us.detail_address,o.howToPay
+from orders o inner join user us
+on o.userid = us.id;
+</select>
+
+<select id="findAllOrderDetailList" resultType="com.aruerue.shop.addminDto.AddminOrdersDetailDto">
+select o.id,o.orderDate,o.totalPrice,o.howToPay,od.price,od.stats,od.fee,pro.title,us.name,us.address,us.detail_address,od.quantity
+from orders o inner join orders_detail od inner join user us inner join product pro
+on o.id = od.orderid  and o.userid = us.id and od.productId = pro.id
+
+</select>
+
+<select id="findAllOrderDetailList2" resultType="com.aruerue.shop.addminDto.AddminOrdersDetailDto">
+select o.id,o.orderDate,o.howToPay,od.price,od.stats,od.fee,pro.title,us.name,us.address,us.detail_address,od.quantity,c.type
+from orders o inner join orders_detail od inner join user us inner join product pro inner join category c
+on o.id = od.orderid  and o.userid = us.id and od.productId = pro.id and pro.categoryId = c.id where o.id=#{id}
+
+</select>
+</mapper>
